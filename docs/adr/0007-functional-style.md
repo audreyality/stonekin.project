@@ -68,14 +68,14 @@ class PromptValidator {
 Classes should only encapsulate **stateful, mutable concerns**:
 
 ```typescript
-// ✅ Appropriate: Managing agent session state
-class AgentSession {
+// ✅ Appropriate: Managing conversation session state
+class ConversationSession {
   private messages: readonly Message[] = [];
   private state: SessionState = 'idle';
   
   async sendMessage(prompt: string): Promise<Result<AgentResponse, string>> {
     if (this.state !== 'idle') {
-      return [undefined, 'Agent is busy processing another request'];
+      return [undefined, 'Session is busy processing another request'];
     }
     
     this.state = 'processing';

@@ -76,7 +76,7 @@ src/
 
 ```typescript
 // src/prelude.ts - Root abstractions
-export type ConfigBase = {
+export type AgentConfigBase = {
   readonly id: string;
   readonly version: string;
 };
@@ -91,7 +91,7 @@ export interface LoggerInterface {
 // src/agent/prelude.ts - Agent abstractions
 export * from '../prelude.ts';  // Required: inherit parent abstractions
 
-export type AgentConfig = ConfigBase & {
+export type AgentConfig = AgentConfigBase & {
   readonly name: string;
   readonly capabilities: readonly string[];
 };
@@ -102,7 +102,7 @@ export interface AgentInterface {
 ```
 
 ```typescript
-// src/agent/agent-registry.ts - Implementation file
+// src/agent/agent-processor.ts - Implementation file
 import type { AgentConfig } from '../prelude.ts';  // ✅ Parent prelude allowed
 
 export const DEFAULT_AGENT_CONFIG: AgentConfig = {
@@ -115,8 +115,8 @@ export const DEFAULT_AGENT_CONFIG: AgentConfig = {
 
 ```typescript
 // src/agent/index.ts - Public interface
-export { Agent } from './composition-engine.ts';            // ✅ Own folder implementation
-export { DEFAULT_AGENT_CONFIG } from './agent-registry.ts'; // ✅ Own folder implementation
+export { Agent } from './conversation-manager.ts';          // ✅ Own folder implementation
+export { DEFAULT_AGENT_CONFIG } from './agent-processor.ts'; // ✅ Own folder implementation
 export { * } from './supervisors';                          // ✅ Re-export child content
 ```
 
@@ -125,8 +125,8 @@ export { * } from './supervisors';                          // ✅ Re-export chi
 ```typescript
 // ✅ Allowed imports
 import { ApiConfig } from '../prelude.ts';                    // Parent prelude
-import { AgentData } from './agent-registry.ts';              // Same folder implementation
-import { validateTemplate } from './template-utils.ts';       // Same folder utility
+import { AgentData } from './agent-processor.ts';             // Same folder implementation
+import { validatePrompt } from './prompt-utils.ts';           // Same folder utility
 import { ToolExecutor } from './tools';                       // Sibling folder
 import { readFile } from 'fs/promises';                       // Node.js built-in
 import { z } from 'zod';                                      // External package
@@ -134,7 +134,7 @@ import { z } from 'zod';                                      // External packag
 // ❌ Forbidden imports
 import { AgentService } from './index.ts';                    // Own folder interface
 import { AgentTypes } from './prelude.ts';                    // Own folder prelude
-import { TemplateEngine } from './prompt/template-engine.ts'; // Child folder (nested)
+import { ConversationEngine } from './agent/conversation.ts'; // Child folder (nested)
 import { RootConfig } from '../../config.ts';                 // Grandparent folder (nested)
 import { ToolsData } from '../tools/tool-executor.ts';        // Cousin folder (nested)
 ```
@@ -143,10 +143,10 @@ import { ToolsData } from '../tools/tool-executor.ts';        // Cousin folder (
 
 ```typescript
 // Parent module using child module through public interface
-import { TemplateEngine } from './template-engine/index.ts';  // ✅ Child's public interface
+import { ConversationManager } from './conversation/index.ts';  // ✅ Child's public interface
 
 // Child module using parent abstractions
-import type { ConfigBase } from '../prelude.ts';              // ✅ Parent abstractions
+import type { AgentConfigBase } from '../prelude.ts';           // ✅ Parent abstractions
 
 // Sibling communication through parent (when necessary)
 // Both modules export through parent's index.ts, consumer imports from parent

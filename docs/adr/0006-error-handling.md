@@ -41,19 +41,19 @@ We will **avoid throwing exceptions** for recoverable errors and instead use **t
 ```typescript
 import { Option } from "@stokekin/ts"
 // Creating options
-function findUser(id: string): Option<User> {
-  const user = users.find(u => u.id === id);
-  return user ? [user] : [];
+function findAgent(id: string): Option<Agent> {
+  const agent = agents.find(a => a.id === id);
+  return agent ? [agent] : [];
 }
 
 // Using options with destructuring
-const [user] = findUser('123');
+const [agent] = findAgent('agent-123');
 
 // Simple truthy checks
-if (user) {
-  console.log(`Found: ${user.name}`);
+if (agent) {
+  console.log(`Found: ${agent.id}`);
 } else {
-  console.log('User not found');
+  console.log('Agent not found');
 }
 ```
 
@@ -64,28 +64,28 @@ if (user) {
 type Result<T, E = Error> = [T, undefined] | [undefined, E];
 
 // Creating results
-async function fetchUserData(id: string): Promise<Result<UserData, string>> {
+async function loadAgentConfig(id: string): Promise<Result<AgentConfig, string>> {
   try {
-    const response = await fetch(`/api/users/${id}`);
+    const response = await fetch(`/api/agents/${id}/config`);
     if (!response.ok) {
       return [undefined, `HTTP ${response.status}: ${response.statusText}`];
     }
-    const data = await response.json();
-    return [data, undefined];
+    const config = await response.json();
+    return [config, undefined];
   } catch (error) {
     return [undefined, `Network error: ${error.message}`];
   }
 }
 
 // Using results with destructuring
-const [userData, error] = await fetchUserData('123');
+const [agentConfig, error] = await loadAgentConfig('agent-123');
 if (error) {
-  console.error('Failed to fetch user:', error);
+  console.error('Failed to load agent config:', error);
   return;
 }
 
-// userData is guaranteed to be defined here
-processUserData(userData);
+// agentConfig is guaranteed to be defined here
+processAgentConfig(agentConfig);
 ```
 
 ### File Organization
@@ -95,28 +95,27 @@ Following our module patterns:
 ```typescript
 // data.ts - error constants
 export const ErrorCode = {
-  VALIDATION_FAILED: 'validation_failed',
-  NOT_FOUND: 'not_found',
-  PERMISSION_DENIED: 'permission_denied',
-  NETWORK_ERROR: 'network_error'
+  AGENT_NOT_FOUND: 'agent_not_found',
+  AGENT_CONFIG_INVALID: 'agent_config_invalid',
+  CONVERSATION_ERROR: 'conversation_error',
+  TOOL_EXECUTION_FAILED: 'tool_execution_failed'
 } as const;
 
 // type.ts - result and option types
 export type ErrorCodeType = typeof ErrorCode[keyof typeof ErrorCode];
 
-export type ValidationError = {
-  readonly code: typeof ErrorCode.VALIDATION_FAILED;
+export type AgentConfigError = {
+  readonly code: typeof ErrorCode.AGENT_CONFIG_INVALID;
   readonly field: string;
   readonly message: string;
 };
 
-export type NotFoundError = {
-  readonly code: typeof ErrorCode.NOT_FOUND;
-  readonly resource: string;
-  readonly id: string;
+export type AgentNotFoundError = {
+  readonly code: typeof ErrorCode.AGENT_NOT_FOUND;
+  readonly agentId: string;
 };
 
-export type AppError = ValidationError | NotFoundError;
+export type AgentError = AgentConfigError | AgentNotFoundError;
 ```
 
 ### When to Use Exceptions

@@ -42,8 +42,8 @@ Exports the module's public API for external consumers. Only imports from local 
 
 ```typescript
 // filepath: src/agent/index.ts
-export { spawnAgent } from './agent.ts';
-export { createAgentRegistry } from './di.ts';
+export { createAgent } from './agent.ts';
+export { processConversation } from './conversation.ts';
 export type { AgentConfig } from './type.ts';
 export { DEFAULT_AGENT_CONFIG } from './data.ts';
 ```
@@ -56,7 +56,7 @@ Exports types and interfaces for child modules. Must re-export parent's prelude.
 // filepath: src/agent/prelude.ts
 export * from '../prelude.ts';
 export type { AgentError } from './type.ts';
-export type { Agent, AgentExecutor, AgentRegistry } from './api.ts';
+export type { Agent, ToolExecutor, LlmProvider } from './api.ts';
 ```
 
 #### `data.ts` - Constants and Configuration
@@ -68,11 +68,13 @@ Contains default configurations, constants, and enum-like objects. No function d
 export const DEFAULT_AGENT_CONFIG = {
   timeout: 30000,
   model: 'claude-3-sonnet',
+  // ...
 } as const;
 
 export const AGENT_CAPABILITIES = {
   REASONING: 'reasoning',
   TOOL_USE: 'tool-use',
+  // ...
 } as const;
 ```
 
@@ -89,6 +91,7 @@ export type AgentCapability = typeof AGENT_CAPABILITIES[keyof typeof AGENT_CAPAB
 export type AgentConfig = {
   readonly id: string;
   readonly capabilities: readonly AgentCapability[];
+  // ...
 };
 
 export type AgentError = {
@@ -109,17 +112,12 @@ export interface Agent {
   execute(prompt: string): Promise<Result<string, string>>;
 }
 
-export interface AgentExecutor {
-  execute(prompt: string): Promise<Result<string, AgentError>>;
+export interface ToolExecutor {
+  executeTool(name: string, args: unknown): Promise<Result<string, AgentError>>;
 }
 
-export interface AgentRegistry {
-  register(agent: Agent): void;
-  findById(id: string): Option<Agent>;
-}
-
-export interface ModelProvider {
-  generate(prompt: string): Promise<Result<string, string>>;
+export interface LlmProvider {
+  generateResponse(prompt: string): Promise<Result<string, string>>;
 }
 ```
 
@@ -130,15 +128,15 @@ Contains factory functions and dependency injection utilities. Creates configure
 ```typescript
 // filepath: src/agent/di.ts
 import type { AgentConfig } from './type.ts';
-import type { ModelProvider } from './api.ts';
+import type { LlmProvider } from './api.ts';
 import { DEFAULT_AGENT_CONFIG } from './data.ts';
 
-export function createAgentWithDeps(deps: { modelProvider: ModelProvider }) {
-  // ...implementation...
+export function createAgentWithDeps(deps: { llmProvider: LlmProvider }) {
+  // ...
 }
 
 export function createAgentRegistry() {
-  // ...implementation...
+  // ...
 }
 ```
 
@@ -151,24 +149,24 @@ Contains stateless utility functions that operate on the module's types. No side
 import type { AgentConfig, AgentCapability } from './type.ts';
 
 export function validateAgentConfig(config: AgentConfig): boolean {
-  // ...implementation...
+  // ...
 }
 
 export function hasCapability(config: AgentConfig, capability: AgentCapability): boolean {
-  // ...implementation...
+  // ...
 }
 ```
 
 ### How Files Work Together
 
 ```typescript
-// spawn-agent.ts - imports from standard files
+// create-agent.ts - imports from standard files
 import type { AgentConfig } from './type.ts';
-import type { Agent, ModelProvider } from './api.ts';
+import type { Agent, LlmProvider } from './api.ts';
 import { validateAgentConfig } from './util.ts';
 import { DEFAULT_AGENT_CONFIG } from './data.ts';
 
-export function spawnAgent(config: AgentConfig, modelProvider: ModelProvider): Agent {
+export function createAgent(config: AgentConfig, llmProvider: LlmProvider): Agent {
   if (!validateAgentConfig(config)) {
     throw new Error('Invalid agent configuration');
   }
@@ -176,8 +174,9 @@ export function spawnAgent(config: AgentConfig, modelProvider: ModelProvider): A
   return {
     id: config.id,
     async execute(prompt: string) {
-      return modelProvider.generate(prompt);
+      return llmProvider.generateResponse(prompt);
     }
+    // ...
   };
 }
 ```

@@ -38,15 +38,15 @@ Focus on what things represent and what functions accomplish:
 
 ```typescript
 // ✅ Domain-focused naming
-const searchTool = createWebSearchTool(config);
-const analysisPrompt = createAnalysisTemplate(domain);
+const agentTool = createWebSearchTool(config);
+const conversationPrompt = createAnalysisTemplate(domain);
 
 function toolForCapability(capability: string): Tool | null {
   return registry.findByCapability(capability);
 }
 
-function promptForTask(taskType: string): PromptTemplate {
-  return library.getTemplate(taskType);
+function promptForConversation(context: string): PromptTemplate {
+  return library.getTemplate(context);
 }
 
 // ❌ Implementation-focused naming
@@ -73,9 +73,9 @@ interface ToolExecutor {
   validateParameters(parameters: unknown): boolean;
 }
 
-interface PromptRenderer {
-  render(context: PromptContext): string;
-  validateContext(context: PromptContext): boolean;
+interface PromptValidator {
+  validatePrompt(prompt: string): boolean;
+  sanitizePrompt(prompt: string): string;
 }
 
 // ❌ Data-focused or generic interface names
@@ -110,12 +110,12 @@ Use descriptive domain-specific constant names:
 
 ```typescript
 // ✅ Domain-meaningful constant names
-const AgentState = {
+const AgentStatus = {
   IDLE: 'idle',
   PROCESSING: 'processing', 
 } as const;
 
-const ToolCategory = {
+const ToolType = {
   WEB_SEARCH: 'web-search',
   CALCULATOR: 'calculator',
 } as const;
@@ -138,8 +138,8 @@ Name functions by their domain purpose, not their technical role:
 
 ```typescript
 // ✅ Domain purpose naming (avoids service pattern)
-function spawnAgent(config: AgentConfig): Agent { /* Creates rich domain object */ }
-function enrichPromptWithContext(template: PromptTemplate, context: Context): string { /* Domain operation */ }
+function createAgent(config: AgentConfig): Agent { /* Creates rich domain object */ }
+function processConversation(template: PromptTemplate, context: Context): string { /* Domain operation */ }
 function routeToCapableAgent(request: AgentRequest): Agent | null { /* Domain logic */ }
 
 // ❌ Service pattern naming

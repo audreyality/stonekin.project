@@ -38,26 +38,27 @@ All documentation will use language from the agentic systems domain rather than 
 Every NPM module must have a README.md:
 
 ```markdown
-# Agent Registry
+# Agent Framework
 
 Manages agent lifecycle and discovery within the Stonekin framework.
 
 ## Installation
 
 ```bash
-npm install @stonekin/agent-registry
+npm install @stonekin/agent-framework
 ```
 
 ## Usage
 
 ```typescript
-import { AgentRegistry, AgentCapability } from '@stonekin/agent-registry';
+import { createAgent, processConversation } from '@stonekin/agent-framework';
 
-const registry = new AgentRegistry();
-await registry.register({
+const agent = createAgent({
   id: 'customer-support',
-  capabilities: [AgentCapability.CONVERSATION]
+  capabilities: ['conversation', 'search']
 });
+
+const response = await processConversation(agent, userMessage, tools);
 ```
 
 ## Dependencies
@@ -72,7 +73,7 @@ await registry.register({
 For complex agent subsystems requiring domain context:
 
 ```markdown
-# Conversation Context Domain
+# Conversation Management Domain
 
 ## Overview
 
@@ -85,13 +86,13 @@ Manages stateful interactions between users and agents while preserving conversa
 - Agent configuration and capability constraints  
 - Tool execution context and partial results
 
-### Tool Use Protocol
-When agents request tool execution:
-1. Agent sends tool request with parameters
-2. Context system validates tool access permissions
-3. Tool executes in isolated environment
-4. Results return through conversation context
-5. Agent incorporates results into response
+### Agent Processing Protocol
+When agents process conversations:
+1. Agent receives user message with conversation context
+2. Agent analyzes message using configured capabilities
+3. Agent may invoke tools through execution framework
+4. Results integrate into conversation history
+5. Agent generates contextual response
 
 ## Architecture Patterns
 
@@ -104,9 +105,9 @@ All exported functions must include domain-specific documentation:
 
 ```typescript
 /**
- * Orchestrates conversation between agent and user with tool access.
+ * Processes conversation turn with agent capabilities and tool access.
  * 
- * @param session - Conversation session with context and history
+ * @param agent - Configured agent with defined capabilities
  * @param message - User input message to process
  * @param tools - Available tools for agent invocation
  * @returns Agent response with tool interactions
@@ -115,19 +116,19 @@ All exported functions must include domain-specific documentation:
  *
  * @example
  * ```typescript
- * const response = await orchestrateConversation(
- *   userSession,
+ * const response = await processConversation(
+ *   chatAgent,
  *   "Debug this TypeScript error",
  *   [codeAnalysisTool]
  * );
  * ```
  */
-export async function orchestrateConversation(
-  session: ConversationSession,
+export async function processConversation(
+  agent: Agent,
   message: UserMessage,
   tools: AgentTool[]
 ): Promise<AgentResponse> {
-  // Implementation...
+  // ...
 }
 ```
 

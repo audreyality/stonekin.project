@@ -55,33 +55,33 @@ loadAgent('agent-123');    // ❌ Compile error
 
 ```typescript
 // data.ts
-export const TaskStatus = {
-  PENDING: 'pending',
-  EXECUTING: 'executing',
-  COMPLETED: 'completed'
+export const AgentStatus = {
+  IDLE: 'idle',
+  PROCESSING: 'processing', 
+  COMPLETE: 'complete'
 } as const;
 ```
 
 ```typescript
 // type.ts
-export type TaskState = 
-  | { status: typeof TaskStatus.PENDING; queuePosition: number }
-  | { status: typeof TaskStatus.EXECUTING; progress: number }
-  | { status: typeof TaskStatus.COMPLETED; result: string };
+export type AgentState = 
+  | { status: typeof AgentStatus.IDLE; lastActivity: Date }
+  | { status: typeof AgentStatus.PROCESSING; requestId: string }
+  | { status: typeof AgentStatus.COMPLETE; result: string };
 ```
 
 ### Type-Safe State Handling
 
 ```typescript
 // TypeScript ensures all cases are handled
-function formatTask(task: TaskState): string {
-  switch (task.status) {
-    case TaskStatus.PENDING:
-      return `Queued at position ${task.queuePosition}`;
-    case TaskStatus.EXECUTING:
-      return `${task.progress}% complete`;
-    case TaskStatus.COMPLETED:
-      return `Done: ${task.result}`;
+function formatAgentStatus(agent: AgentState): string {
+  switch (agent.status) {
+    case AgentStatus.IDLE:
+      return `Idle since ${agent.lastActivity.toLocaleString()}`;
+    case AgentStatus.PROCESSING:
+      return `Processing request ${agent.requestId}`;
+    case AgentStatus.COMPLETE:
+      return `Completed: ${agent.result}`;
   }
 }
 ```
@@ -93,10 +93,10 @@ function formatTask(task: TaskState): string {
 function loadAgent(id: string): Agent { /* loses type safety */ }
 
 // ❌ Don't use optional properties for exclusive states
-type TaskState = {
+type AgentState = {
   status: string;
-  queuePosition?: number;    // Could exist with wrong status
-  progress?: number;         // Invalid combinations possible
+  lastActivity?: Date;       // Could exist with wrong status
+  requestId?: string;        // Invalid combinations possible
   result?: string;
 };
 ```

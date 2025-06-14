@@ -35,36 +35,27 @@ Use `type` for pure data structures, configurations, and value objects that shou
 
 ```typescript
 // ✅ Types for data structures
-type UserProfile = {
-  readonly id: string;
-  readonly email: string;
-  readonly preferences: {
-    readonly theme: 'light' | 'dark';
-    readonly notifications: boolean;
-  };
-};
-
 type AgentConfig = {
-  readonly name: string;
+  readonly id: string;
+  readonly capabilities: readonly string[];
   readonly model: string;
-  readonly temperature: number;
   readonly maxTokens: number;
 };
 
 // ✅ Types for discriminated unions (state modeling)
-type ProcessingState = 
-  | { readonly status: 'pending'; readonly queuePosition: number }
+type AgentState = 
+  | { readonly status: 'idle'; readonly lastActivity: Date }
   | { readonly status: 'processing'; readonly progress: number }
   | { readonly status: 'complete'; readonly result: string }
   | { readonly status: 'failed'; readonly error: string };
 
 // ✅ Types for branded primitives
-type UserId = string & { readonly __brand: 'UserId' };
-type Email = string & { readonly __brand: 'Email' };
+type AgentId = string & { readonly __brand: 'AgentId' };
+type ConversationId = string & { readonly __brand: 'ConversationId' };
 
 // ✅ Types for constant objects (our enum alternative)
-const Status = { PENDING: 'pending', COMPLETE: 'complete' } as const;
-type StatusType = typeof Status[keyof typeof Status];
+const AgentStatus = { IDLE: 'idle', PROCESSING: 'processing', COMPLETE: 'complete' } as const;
+type AgentStatusType = typeof AgentStatus[keyof typeof AgentStatus];
 ```
 
 ### Behavioral Modeling with Interfaces
@@ -73,21 +64,20 @@ Use `interface` for behavioral contracts, service definitions, and functional ab
 
 ```typescript
 // ✅ Interfaces for behavioral contracts
-interface Logger {
-  info(message: string, context?: Record<string, unknown>): void;
-  error(message: string, error?: Error): void;
-  debug(message: string, data?: unknown): void;
+interface LlmProvider {
+  generateResponse(prompt: string, config?: Record<string, unknown>): Promise<string>;
+  validatePrompt(prompt: string): boolean;
 }
 
-interface AgentExecutor {
-  execute(prompt: string, config: AgentConfig): Promise<string>;
-  validateConfig(config: AgentConfig): boolean;
+interface ToolExecutor {
+  execute(toolName: string, parameters: unknown): Promise<unknown>;
+  validateParameters(toolName: string, parameters: unknown): boolean;
 }
 
 // ✅ Interfaces for dependency contracts (goes in api.ts)
-interface DatabaseConnection {
-  query<T>(sql: string, params?: unknown[]): Promise<T[]>;
-  transaction<T>(work: (tx: DatabaseConnection) => Promise<T>): Promise<T>;
+interface ConversationStore {
+  saveMessage(conversationId: ConversationId, message: string): Promise<void>;
+  loadHistory(conversationId: ConversationId): Promise<string[]>;
   close(): Promise<void>;
 }
 ```

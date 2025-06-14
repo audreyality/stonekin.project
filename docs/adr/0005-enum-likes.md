@@ -37,25 +37,25 @@ type StatusNameType = typeof StatusName[keyof typeof StatusName];
 
 ```typescript
 // ✅ Enum-like for status values
-const ProcessingStatus = {
-  PENDING: 'pending',
+const AgentStatus = {
+  IDLE: 'idle',
   PROCESSING: 'processing',
   COMPLETE: 'complete',
   FAILED: 'failed'
 } as const;
 
-type ProcessingStatusType = typeof ProcessingStatus[keyof typeof ProcessingStatus];
-// Expands to: 'pending' | 'processing' | 'complete' | 'failed'
+type AgentStatusType = typeof AgentStatus[keyof typeof AgentStatus];
+// Expands to: 'idle' | 'processing' | 'complete' | 'failed'
 
 // Usage
-function updateStatus(status: ProcessingStatusType) {
+function updateAgentStatus(status: AgentStatusType) {
   // Type-safe access to values
-  console.log(`Status changed to: ${status}`);
+  console.log(`Agent status changed to: ${status}`);
 }
 
-updateStatus(ProcessingStatus.PENDING); // ✅ Type-safe
-updateStatus('pending');                // ✅ Also Type-safe!
-updateStatus('invalid');                // ❌ Compile error
+updateAgentStatus(AgentStatus.IDLE);    // ✅ Type-safe
+updateAgentStatus('idle');              // ✅ Also Type-safe!
+updateAgentStatus('invalid');           // ❌ Compile error
 ```
 
 ### Numeric Enum-likes
@@ -64,19 +64,19 @@ When you need numeric constants:
 
 ```typescript
 // ✅ Numeric enum-like
-const Priority = {
+const ToolPriority = {
   LOW: 1,
   MEDIUM: 5,
   HIGH: 10,
   CRITICAL: 20
 } as const;
 
-type PriorityType = typeof Priority[keyof typeof Priority];
+type ToolPriorityType = typeof ToolPriority[keyof typeof ToolPriority];
 // Expands to: 1 | 5 | 10 | 20
 
 // Usage with type guards
-function isPriorityValue(value: unknown): value is PriorityType {
-  return Object.values(Priority).includes(value as PriorityType);
+function isToolPriorityValue(value: unknown): value is ToolPriorityType {
+  return Object.values(ToolPriority).includes(value as ToolPriorityType);
 }
 ```
 
@@ -129,35 +129,30 @@ Enum-likes work perfectly with our discriminated union patterns:
 
 ```typescript
 // data.ts
-export const TaskStatus = {
-  PENDING: 'pending',
-  RUNNING: 'running',
+export const AgentStatus = {
+  IDLE: 'idle',
+  PROCESSING: 'processing',
   COMPLETE: 'complete',
   FAILED: 'failed'
 } as const;
 
 // type.ts
-export type TaskState = 
-  | { readonly status: typeof TaskStatus.PENDING; readonly queuePosition: number }
-  | { readonly status: typeof TaskStatus.RUNNING; readonly progress: number }
-  | { readonly status: typeof TaskStatus.COMPLETE; readonly result: string }
-  | { readonly status: typeof TaskStatus.FAILED; readonly error: string };
+export type AgentState = 
+  | { readonly status: typeof AgentStatus.IDLE; readonly lastActivity: Date }
+  | { readonly status: typeof AgentStatus.PROCESSING; readonly progress: number }
+  | { readonly status: typeof AgentStatus.COMPLETE; readonly result: string }
+  | { readonly status: typeof AgentStatus.FAILED; readonly error: string };
 
 // Perfect type narrowing
-function handleTaskState(state: TaskState) {
+function handleAgentState(state: AgentState) {
   switch (state.status) {
-    case TaskStatus.PENDING:
-      console.log(`Queued at position: ${state.queuePosition}`);
+    case AgentStatus.IDLE:
+      console.log(`Last active: ${state.lastActivity}`);
       break;
-    case TaskStatus.RUNNING:
+    case AgentStatus.PROCESSING:
       console.log(`Progress: ${state.progress}%`);
       break;
-    case TaskStatus.COMPLETE:
-      console.log(`Result: ${state.result}`);
-      break;
-    case TaskStatus.FAILED:
-      console.log(`Error: ${state.error}`);
-      break;
+    // ...
   }
 }
 ```

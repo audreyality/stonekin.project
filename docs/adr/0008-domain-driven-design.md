@@ -84,13 +84,13 @@ interface Executable<T = object> extends T {
   canHandle(requestType: string): boolean;
 }
 
-interface Spawnable<T = object> extends T {
-  spawn(config: AgentConfig): Promise<T>;
-  terminate(): Promise<void>;
+interface Configurable<T = object> extends T {
+  updateConfig(config: AgentConfig): Promise<T>;
+  getCapabilities(): readonly string[];
 }
 
 // Compose interfaces for domain objects
-interface Agent extends Executable<AgentData>, Spawnable<AgentData> {
+interface Agent extends Executable<AgentData>, Configurable<AgentData> {
   communicate(message: Message): Promise<Result<Response, string>>;
 }
 
@@ -117,26 +117,26 @@ function makeExecutable<T extends AgentData>(data: T): Executable<T> {
   }) as Executable<T>;
 }
 
-function makeSpawnable<T extends AgentData>(data: T): Spawnable<T> {
+function makeConfigurable<T extends AgentData>(data: T): Configurable<T> {
   return Object.assign(data, {
-    async spawn(config: AgentConfig): Promise<T> {
-      return spawnChildAgent(data, config);
+    async updateConfig(config: AgentConfig): Promise<T> {
+      return { ...data, config } as T;
     },
-    async terminate(): Promise<void> {
-      return terminateAgent(data);
+    getCapabilities(): readonly string[] {
+      return data.capabilities;
     }
-  }) as Spawnable<T>;
+  }) as Configurable<T>;
 }
 
 // Factory composes enhancements
 function createAgent(data: AgentData): Agent {
   let agent = { ...data };
   agent = makeExecutable(agent);
-  agent = makeSpawnable(agent);
+  agent = makeConfigurable(agent);
   
   return Object.assign(agent, {
     async communicate(message: Message): Promise<Result<Response, string>> {
-      return communicateWithAgent(agent, message);
+      // ...
     }
   }) as Agent;
 }

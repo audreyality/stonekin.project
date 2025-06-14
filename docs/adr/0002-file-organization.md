@@ -14,7 +14,7 @@ We will standardize on kebab-case for all files by default, with single-word low
 
 ### Default Naming Conventions
 
-- **Files**: Use kebab-case for all files: `user-service.ts`, `prompt-template.ts`, `mcp-client.ts`
+- **Files**: Use kebab-case for all files: `agent-processor.ts`, `prompt-template.ts`, `conversation-manager.ts`
 - **Folders**: Use single-word lowercase names: `agent`, `prompt`, `tools`
 - **Standard files**: Use lowercase for conventional files: `index.ts`, `prelude.ts`, `readme.md`
 
@@ -41,31 +41,17 @@ Applications and tools may use different conventions when justified:
 ```text
 src/
 ├── agent/                    # Single-word folder
-│   ├── agent-registry.ts     # kebab-case implementation
-│   ├── composition-engine.ts # kebab-case implementation
+│   ├── agent-processor.ts    # kebab-case implementation
+│   ├── conversation-manager.ts # kebab-case implementation
 │   ├── index.ts             # Standard file (lowercase)
 │   └── prelude.ts           # Standard file (lowercase)
 ├── prompt/                   # Single-word folder
 │   ├── template-engine.ts    # kebab-case implementation
-│   ├── history-manager.ts    # kebab-case implementation
+│   ├── context-manager.ts    # kebab-case implementation
 │   └── _explain.md          # Documentation (underscore prefix)
 └── tools/                    # Single-word folder
-    ├── mcp-client.ts         # kebab-case implementation
-    └── tool-executor.ts      # kebab-case implementation
-```
-
-### Naming Examples
-
-```typescript
-// ✅ Correct naming patterns
-import { AgentRegistry } from './agent-registry.ts';
-import { TemplateEngine } from '../prompt/template-engine.ts';
-import { McpClient } from '../tools/mcp-client.ts';
-
-// ❌ Inconsistent naming patterns
-import { AgentRegistry } from './AgentRegistry.ts';
-import { TemplateEngine } from '../prompt/templateEngine.ts';
-import { McpClient } from '../tools/MCPClient.ts';
+    ├── tool-executor.ts      # kebab-case implementation
+    └── capability-registry.ts # kebab-case implementation
 ```
 
 ### Project Root Files (Specialized Requirements)

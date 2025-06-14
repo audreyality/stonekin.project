@@ -36,11 +36,10 @@ Define dependency contracts in `api.ts` files:
 ```typescript
 // agent/api.ts
 export interface LlmProvider {
-  query(prompt: string): Promise<Result<string, string>>;
+  generateResponse(prompt: string): Promise<Result<string, string>>;
 }
 
-export interface ToolRegistry {
-  getTool(name: string): Option<Tool>;
+export interface ToolExecutor {
   executeTool(name: string, args: unknown): Promise<Result<ToolResult, string>>;
 }
 ```
@@ -53,18 +52,18 @@ Create factories in `di.ts` files that accept dependencies as curried parameters
 // agent/di.ts
 type AgentDependencies = {
   llmProvider: LlmProvider;
-  toolRegistry: ToolRegistry;
+  toolExecutor: ToolExecutor;
 };
 
 // Factory function with dependency injection
 function createAgentWithDeps(deps: AgentDependencies, data: AgentData): Agent {
   return Object.assign({ ...data }, {
     async execute(request: AgentRequest) {
-      return deps.llmProvider.query(request.prompt);
+      return deps.llmProvider.generateResponse(request.prompt);
     },
     
     async useTool(name: string, args: unknown) {
-      return deps.toolRegistry.executeTool(name, args);
+      return deps.toolExecutor.executeTool(name, args);
     }
   }) as Agent;
 }
@@ -80,7 +79,7 @@ Wire dependencies at application startup using `bind`:
 // app.ts - Application startup
 const dependencies: AgentDependencies = {
   llmProvider: new OpenAIProvider(),
-  toolRegistry: new McpToolRegistry()
+  toolExecutor: new McpToolExecutor()
 };
 
 // Create bound factory with dependencies injected
@@ -90,13 +89,13 @@ const createAgent = createAgentWithDeps.bind(null, dependencies);
 const textAgent = createAgent({
   id: 'text-agent-1',
   capabilities: ['text-processing'],
-  config: { model: 'gpt-4', temperature: 0.7 }
+  // ...
 });
 
 const toolAgent = createAgent({
   id: 'tool-agent-1', 
   capabilities: ['tool-execution'],
-  config: { model: 'gpt-4', temperature: 0 }
+  // ...
 });
 ```
 
@@ -106,10 +105,10 @@ const toolAgent = createAgent({
 // agent/agent.test.ts
 test('handles llm provider errors', async () => {
   const mockProvider: LlmProvider = {
-    async query() { return [undefined, 'Connection timeout']; }
+    async generateResponse() { return [undefined, 'Connection timeout']; }
   };
   
-  const mockDeps = { llmProvider: mockProvider, toolRegistry: mockToolRegistry };
+  const mockDeps = { llmProvider: mockProvider, toolExecutor: mockToolExecutor };
   const agent = createAgentWithDeps(mockDeps, testAgentData);
   
   const [response, error] = await agent.execute({ prompt: 'Hello' });
@@ -140,14 +139,14 @@ function createAgentSystemWithDeps(
         type: 'agent.spawned',
         agentId: agent.id
       });
-      return [agent, undefined];
+      // ...
     }
   };
 }
 
 // In application code
 const createAgentSystem = createAgentSystemWithDeps.bind(null, { eventBus });
-const agentSystem = createAgentSystem(systemConfig);
+// ...
 ```
 
 ## Consequences
