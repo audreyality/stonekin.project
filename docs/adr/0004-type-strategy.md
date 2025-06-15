@@ -20,10 +20,10 @@ This creates a clear mental model: types represent "what something looks like" w
 ## Why This Approach
 
 - **Semantic clarity**: The distinction matches the conceptual difference between data and behavior
-- **Serialization safety**: Types naturally encourage JSON-compatible data structures
+- **Serialization safety**: Types naturally encourage [JSON-compatible data structures](https://www.json.org/json-en.html)
 - **Contract modeling**: Interfaces clearly express behavioral expectations and dependencies
 - **Composition patterns**: Types work better with union types and data transformation, interfaces work better with dependency injection and mocking
-- **Extensibility**: Behaviors may be progressively enhanced using declaration merging
+- **Extensibility**: Behaviors may be progressively enhanced using [declaration merging](https://www.typescriptlang.org/docs/handbook/declaration-merging.html)
 - **Tooling alignment**: Most TypeScript tooling expects interfaces for behavioral contracts
 - **Architectural consistency**: Aligns with our preference for functional idioms over OOP patterns
 
@@ -160,8 +160,15 @@ type UserWithActions = {
 
 ## Related ADRs
 
-- **Builds on:** [ADR-0001: Module Organization] (file placement patterns)
-- **See also:** [ADR-0005: Enum Alternatives] (constant object patterns used with types)
+- **Builds on:** [ADR-0001: Module Organization](0001-module-organization.md) (file placement patterns)
+- **Aligns with:** [ADR-0002: File Organization](0002-file-organization.md) (type.ts and api.ts file patterns)
+- **See also:** [ADR-0005: Enum Alternatives](0005-enum-likes.md) (constant object patterns used with types)
+- **Extended by:** [ADR-0010: Domain Modeling with Branded Types](0010-domain-modelling.md) (practical application of type vs interface principles)
+- **Extended by:** [ADR-0011: Naming Conventions and Domain Language](0011-naming-conventions.md) (naming patterns for types vs interfaces)
+
+---
+
+← [ADR-0003: Boundaries and Dependencies](0003-boundaries-and-dependencies.md) | [ADR-0005: Enum Alternatives](0005-enum-likes.md) →
 
 ---
 

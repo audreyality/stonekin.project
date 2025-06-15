@@ -12,7 +12,7 @@ Without a clear alternative pattern, developers might reach for enums out of hab
 
 ## Decision
 
-We will **never use TypeScript enums**. Instead, we use **"enum-likes"** - constant objects with `as const` assertions that provide the same developer experience as enums but with better type safety, no runtime overhead, and perfect JSON compatibility.
+We will **never use TypeScript enums**. Instead, we use **"enum-likes"** - constant objects with [`as const` assertions](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) that provide the same developer experience as enums but with better type safety, no runtime overhead, and perfect JSON compatibility.
 
 Enum-likes follow this pattern:
 
@@ -23,11 +23,11 @@ type StatusNameType = typeof StatusName[keyof typeof StatusName];
 
 ## Why This Approach
 
-- **Zero runtime overhead**: `as const` objects are purely compile-time constructs
+- **Zero runtime overhead**: [`as const` objects](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#literal-types) are purely compile-time constructs
 - **Perfect JSON compatibility**: Values serialize naturally without transformation
 - **Better type safety**: Impossible to access undefined enum members
 - **Immutable by design**: `as const` prevents accidental mutation
-- **Tree-shakable**: Unused values can be eliminated by bundlers
+- **Tree-shakable**: Unused values can be eliminated by [bundlers](https://webpack.js.org/guides/tree-shaking/)
 - **Functional alignment**: Works naturally with our discriminated union patterns
 - **Predictable behavior**: No surprising enum edge cases or reverse mappings
 
@@ -125,7 +125,7 @@ export type LogEntry = {
 
 ### Integration with Discriminated Unions
 
-Enum-likes work perfectly with our discriminated union patterns:
+Enum-likes work perfectly with our [discriminated union patterns](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#discriminated-unions):
 
 ```typescript
 // data.ts
@@ -196,11 +196,13 @@ const validStatuses = getEnumValues(ProcessingStatus);
 const isValidStatus = isEnumValue(ProcessingStatus, userInput);
 ```
 
+*Note: [`Object.values()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/values) can also be used directly for extracting enum-like values when utility functions aren't available.*
+
 ## Consequences
 
 - **Benefits:**
   - Zero runtime overhead compared to TypeScript enums
-  - Perfect JSON serialization without transformation
+  - Perfect [JSON serialization](https://www.json.org/) without transformation
   - Better type safety and predictable behavior
   - Natural integration with functional patterns
   - Clear, discoverable constant definitions
@@ -212,8 +214,13 @@ const isValidStatus = isEnumValue(ProcessingStatus, userInput);
 
 ## Related ADRs
 
-- **Builds on:** [ADR-0004: Type System Strategy] (enum-likes go in data.ts, types in type.ts)
-- **See also:** [ADR-0010: Domain Modeling] (discriminated unions with enum-likes)
+- **Builds on:** [ADR-0004: Type System Strategy](0004-type-strategy.md) (enum-likes go in data.ts, types in type.ts)
+- **See also:** [ADR-0010: Domain Modeling](0010-domain-modelling.md) (discriminated unions with enum-likes)
+- **Extended by:** [ADR-0011: Naming Conventions and Domain Language](0011-naming-conventions.md) (naming conventions for constants)
+
+---
+
+← [ADR-0004: Type System Strategy](0004-type-strategy.md) | [ADR-0006: Error Handling Strategy](0006-error-handling.md) →
 
 ---
 

@@ -61,7 +61,7 @@ export type { Agent, ToolExecutor, LlmProvider } from './api.ts';
 
 #### `data.ts` - Constants and Configuration
 
-Contains default configurations, constants, and enum-like objects. No function definitions.
+Contains default configurations, constants, and [enum-like objects](0005-enum-likes.md). No function definitions.
 
 ```typescript
 // filepath: src/agent/data.ts
@@ -80,7 +80,7 @@ export const AGENT_CAPABILITIES = {
 
 #### `type.ts` - Type Definitions
 
-Defines data structures and type aliases. No implementations, only type declarations.
+Defines data structures and type aliases following [type system strategy](0004-type-strategy.md). No implementations, only type declarations.
 
 ```typescript
 // filepath: src/agent/type.ts
@@ -102,7 +102,7 @@ export type AgentError = {
 
 #### `api.ts` - Interface Definitions
 
-Defines contracts for dependencies and external integrations. Pure interface definitions.
+Defines contracts for dependencies and external integrations following [type system strategy](0004-type-strategy.md). Pure interface definitions.
 
 ```typescript
 // filepath: src/agent/api.ts
@@ -123,7 +123,7 @@ export interface LlmProvider {
 
 #### `di.ts` - Dependency Injection
 
-Contains factory functions and dependency injection utilities. Creates configured instances.
+Contains [factory functions](0008-domain-driven-design.md) and [dependency injection utilities](0009-dependency-inversion.md). Creates configured instances.
 
 ```typescript
 // filepath: src/agent/di.ts
@@ -142,7 +142,7 @@ export function createAgentRegistry() {
 
 #### `util.ts` - Pure Utility Functions
 
-Contains stateless utility functions that operate on the module's types. No side effects.
+Contains stateless utility functions that operate on the module's types following [functional programming patterns](0007-functional-style.md). No side effects.
 
 ```typescript
 // filepath: src/agent/util.ts
@@ -158,6 +158,8 @@ export function hasCapability(config: AgentConfig, capability: AgentCapability):
 ```
 
 ### How Files Work Together
+
+For a complete understanding of module organization patterns, see the [TypeScript Module Resolution documentation](https://www.typescriptlang.org/docs/handbook/module-resolution.html) and [Node.js ES Modules guide](https://nodejs.org/api/esm.html).
 
 ```typescript
 // create-agent.ts - imports from standard files
@@ -213,7 +215,15 @@ export function createAgent(config: AgentConfig, llmProvider: LlmProvider): Agen
 - **Builds on:** [ADR-0001: Module Organization](0001-module-organization.md)
 - **Builds on:** [ADR-0002: File Naming Conventions](0002-file-organization.md)
 - **Builds on:** [ADR-0003: Import/Export Boundaries](0003-boundaries-and-dependencies.md)
+- **Implements:** [ADR-0004: Type System Strategy](0004-type-strategy.md) (types vs interfaces in separate files)
+- **Implements:** [ADR-0005: Enum Alternatives](0005-enum-likes.md) (enum-likes in `data.ts`)
+- **Supports:** [ADR-0007: Functional Programming Style](0007-functional-style.md) (pure functions in `util.ts`)
+- **Supports:** [ADR-0008: Domain-Driven Design](0008-domain-driven-design.md) (factory patterns in `di.ts`)
+- **Supports:** [ADR-0009: Dependency Injection](0009-dependency-inversion.md) (DI patterns in `di.ts`)
+- **Supports:** [ADR-0011: Naming Conventions and Domain Language](0011-naming-conventions.md) (file naming that implements these conventions)
 - **See also:** Future ADRs on testing patterns will reference these file organization standards
+
+← [ADR-0012: Documentation Standards](0012-documentation.md)
 
 ---
 

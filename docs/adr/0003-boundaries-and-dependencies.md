@@ -6,7 +6,7 @@
 
 ## Problem
 
-Without clear import boundaries, modules become tightly coupled and interdependent, making it difficult to understand, test, and maintain code. Traditional TypeScript projects often allow unrestricted imports between modules, leading to circular dependencies, unclear responsibility boundaries, and modules that are difficult to reason about in isolation. For LLMs working on code generation, this creates an overwhelming context space where any file might depend on any other file.
+Without clear import boundaries, modules become tightly coupled and interdependent, making it difficult to understand, test, and maintain code. Traditional [TypeScript projects](https://www.typescriptlang.org/docs/handbook/modules.html) often allow unrestricted imports between modules, leading to circular dependencies, unclear responsibility boundaries, and modules that are difficult to reason about in isolation. For LLMs working on code generation, this creates an overwhelming context space where any file might depend on any other file.
 
 ## Decision
 
@@ -32,20 +32,20 @@ Files may **only** import from:
 - Implementation files within their own folder (`./data.ts`, `./type.ts`, etc.)
 - Parent folder's prelude (`../prelude.ts`)
 - Sibling folders (`./sibling`)
-- External npm packages
-- Node.js built-in modules
+- [External npm packages](https://docs.npmjs.com/about-packages-and-modules)
+- [Node.js built-in modules](https://nodejs.org/api/)
 
 Files may **never** import from:
 
 - Their own folder's `index.ts` or `prelude.ts`. This prevents circular dependencies.
-- Nested folders (`../cousin`, `./grand/child`, `../../grandparent`). This limits scope and maintains encapsulation.
+- Nested folders (`./grand/child`, `../../grandparent`). This limits scope and maintains encapsulation.
 
 ## Why This Approach
 
-- **Bounded context**: Each module has a clearly defined scope that LLMs can understand completely
+- **[Bounded context](0008-domain-driven-design.md)**: Each module has a clearly defined scope that LLMs can understand completely
 - **Dependency clarity**: Import rules make dependency direction explicit and prevent cycles
 - **Incremental understanding**: Developers and LLMs can understand modules in isolation
-- **Interface segregation**: Public and internal concerns are separated cleanly
+- **[Interface segregation](0004-type-strategy.md)**: Public and internal concerns are separated cleanly
 - **Testability**: Modules can be tested independently through their public interfaces
 
 ## Implementation
@@ -70,6 +70,7 @@ src/
 │   │   ├── index.ts      # Template public interface
 │   │   └── engine.ts     # Template implementation
 │   └── history.ts        # Prompt implementation
+├ ···
 ```
 
 ### Interface File Examples
@@ -170,7 +171,9 @@ import type { AgentConfigBase } from '../prelude.ts';           // ✅ Parent ab
 
 - **Builds on:** [ADR-0001: Module Organization](0001-module-organization.md)
 - **Builds on:** [ADR-0002: File Naming Conventions](0002-file-organization.md)
-- **See also:** Future ADRs on dependency injection and testing will build on these import patterns
+- **Extended by:** [ADR-0009: Dependency Inversion](0009-dependency-inversion.md) (builds on import boundaries for DI patterns)
+
+← [ADR-0002: File Organization](0002-file-organization.md) | [ADR-0004: Type Strategy](0004-type-strategy.md) →
 
 ---
 

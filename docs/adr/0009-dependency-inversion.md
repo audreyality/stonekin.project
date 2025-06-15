@@ -25,13 +25,13 @@ We will use **curried factory functions and interface-based dependency inversion
 - **Testability**: Easy to substitute mock implementations for testing
 - **Zero runtime overhead**: No reflection or metadata required
 - **Framework independence**: No external DI libraries required
-- **Idiomatic JavaScript**: Uses native `bind` for currying
+- **Idiomatic JavaScript**: Uses native [`bind`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind) for currying
 
 ## Implementation
 
 ### Interface-Based Dependency Contracts
 
-Define dependency contracts in `api.ts` files:
+Define dependency contracts in `api.ts` files using [TypeScript interfaces](https://www.typescriptlang.org/docs/handbook/2/objects.html#interfaces):
 
 ```typescript
 // agent/api.ts
@@ -73,7 +73,7 @@ export { createAgentWithDeps };
 
 ### Application-Level Dependency Wiring
 
-Wire dependencies at application startup using `bind`:
+Wire dependencies at application startup using [`bind`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind) for [function currying](https://javascript.info/currying-partials):
 
 ```typescript
 // app.ts - Application startup
@@ -173,8 +173,14 @@ const createAgentSystem = createAgentSystemWithDeps.bind(null, { eventBus });
 
 - **Builds on:** [ADR-0001: Module Organization](0001-module-organization.md) (Parent-child dependencies)
 - **Builds on:** [ADR-0002: File Organization](0002-file-organization.md) (di.ts naming convention)
-- **Builds on:** [ADR-0004: Type System Strategy] (Interfaces for behavioral contracts)
-- **Builds on:** [ADR-0007: Functional Style] (Function composition over frameworks)
+- **Builds on:** [ADR-0004: Type System Strategy](0004-type-strategy.md) (Interfaces for behavioral contracts)
+- **Builds on:** [ADR-0007: Functional Style](0007-functional-style.md) (Function composition over frameworks)
+- **See also:** [ADR-0006: Error Handling](0006-error-handling.md) (Result type patterns in DI)
+- **See also:** [ADR-0008: Domain-Driven Design](0008-domain-driven-design.md) (Factory patterns for domain objects)
+
+---
+
+[← ADR-0008: Domain-Driven Design](0008-domain-driven-design.md) | [ADR-0010: Domain Modeling →](0010-domain-modelling.md)
 
 ---
 

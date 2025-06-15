@@ -21,21 +21,21 @@ We will **prefer functional programming idioms over object-oriented patterns** t
 
 **Core Principles:**
 
-- Pure functions over methods when possible
+- [Pure functions](https://en.wikipedia.org/wiki/Pure_function) over methods when possible
 - Immutable data across module boundaries
 - Function composition over inheritance
 - Explicit return values over void functions with side effects
 - Data and behavior separation over data-behavior coupling
 
 **Immutability Scope:**
-Immutability requirements apply to **module boundaries** (data crossing `index.ts` and `prelude.ts` interfaces). Internal module implementation may use mutable patterns when necessary for performance or third-party integration, but must present immutable interfaces to consumers.
+Immutability requirements apply to **module boundaries** (data crossing `index.ts` and `prelude.ts` interfaces). Internal module implementation may use mutable patterns when necessary for performance or third-party integration, but must present immutable interfaces to consumers. For more on immutability patterns, see [Immutable.js concepts](https://immutable-js.com/docs/v4.3.0/).
 
 ## Why This Approach
 
 - **Predictability**: Pure functions with no side effects are easier to reason about
 - **Testability**: Functions with explicit inputs/outputs are simpler to test
 - **Composability**: Functions can be combined in ways that objects cannot
-- **Type safety**: Functional patterns work better with TypeScript's type system
+- **Type safety**: Functional patterns work better with [TypeScript's type system](https://www.typescriptlang.org/docs/handbook/2/types.html)
 - **Pragmatic**: Allows internal mutation for performance and third-party compatibility
 - **Boundary clarity**: Clear contracts at module interfaces while preserving implementation flexibility
 
@@ -127,6 +127,8 @@ class LLMClient {
 ```
 
 ### Function Composition Patterns
+
+Building on [functional composition principles](https://en.wikipedia.org/wiki/Function_composition_(computer_science)):
 
 ```typescript
 // ✅ Preferred: Function composition for prompt processing
@@ -247,9 +249,16 @@ class WebSocketAgent {
 
 ## Related ADRs
 
-- **Builds on:** [ADR-0003: Import/Export Boundaries] (Immutability applies at these boundaries)
-- **Builds on:** [ADR-0004: Type System Strategy] (Functions work better with type-first design)
-- **Builds on:** [ADR-0006: Error Handling Strategy] (Functional patterns compose with Result types)
+- **Builds on:** [ADR-0003: Import/Export Boundaries](0003-boundaries-and-dependencies.md) (Immutability applies at these boundaries)
+- **Builds on:** [ADR-0004: Type System Strategy](0004-type-strategy.md) (Functions work better with type-first design)
+- **Builds on:** [ADR-0006: Error Handling Strategy](0006-error-handling.md) (Functional patterns compose with Result types)
+- **Extended by:** [ADR-0008: Domain-Driven Design](0008-domain-driven-design.md) (composition over inheritance principles)
+- **Extended by:** [ADR-0009: Dependency Inversion](0009-dependency-inversion.md) (function composition over frameworks)
+- **Extended by:** [ADR-0010: Domain Modeling with Branded Types](0010-domain-modelling.md) (immutable data structures complement branded types)
+
+---
+
+← [ADR-0006: Error Handling Strategy](0006-error-handling.md) | [ADR-0008: Domain-Driven Design](0008-domain-driven-design.md) →
 
 ---
 

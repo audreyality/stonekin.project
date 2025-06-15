@@ -14,6 +14,8 @@ Poor naming choices also make it harder for LLMs to understand the domain model 
 
 We will use **intention-revealing names that describe domain concepts** rather than technical implementation details. All naming should use consistent domain language that reflects the module's problem space.
 
+This approach aligns with established practices outlined in the [TypeScript Deep Dive - Naming Conventions](https://basarat.gitbook.io/typescript/styleguide#variable-and-function) and supports [Domain-Driven Design Reference](https://domainlanguage.com/ddd/reference/) principles for maintaining a [Ubiquitous Language](https://martinfowler.com/bliki/UbiquitousLanguage.html).
+
 ### Core Principles
 
 - **Domain-first naming**: Use terminology from the module's domain
@@ -64,7 +66,7 @@ function retrieveTemplate(taskType: string): PromptTemplate {
 
 ### Interface Names (Behavioral Contracts)
 
-Use domain verbs and capabilities, avoiding data structure names:
+Use domain verbs and capabilities, avoiding data structure names. For additional context on TypeScript interface patterns, see the [TypeScript Handbook - Interfaces](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#interfaces):
 
 ```typescript
 // ✅ Behavior-focused interface names
@@ -189,9 +191,15 @@ function procReq(req: Request): Response { /* Use full words */ }
 
 ## Related ADRs
 
-- **Builds on:** [ADR-0004: Type System Strategy](0004-type-stretegy.md) (Type vs interface naming patterns)
+- **Builds on:** [ADR-0004: Type System Strategy](0004-type-strategy.md) (Type vs interface naming patterns)
 - **Builds on:** [ADR-0008: Domain-Driven Approaches Over Service Patterns](0008-domain-driven-design.md)
 - **Builds on:** [ADR-0002: File Naming and Organization Conventions](0002-file-organization.md)
+- **Supports:** [ADR-0012: Module Documentation Standards](0012-documentation.md) (domain-focused naming improves documentation clarity)
+- **See also:** [ADR-0005: Enum-like Objects and Const Assertions](0005-enum-likes.md) (naming conventions for constants)
+- **See also:** [ADR-0010: Domain Modeling with Branded Types](0010-domain-modelling.md) (branded type naming patterns)
+- **See also:** [ADR-0013: Standard File Patterns](0013-standard-files.md) (file naming that implements these conventions)
+
+← [ADR-0010: Domain Modeling](0010-domain-modelling.md) | [ADR-0012: Documentation Standards](0012-documentation.md) →
 
 ---
 

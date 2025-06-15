@@ -12,7 +12,7 @@ Without a consistent error handling strategy, different modules might use incomp
 
 ## Decision
 
-We will **avoid throwing exceptions** for recoverable errors and instead use **tuple-based Result and Option types** that make error handling explicit in function signatures. This approach uses native JavaScript arrays as containers, providing a uniform pattern that works naturally with existing array methods and destructuring syntax.
+We will **avoid throwing exceptions** for recoverable errors and instead use **tuple-based [Result](https://doc.rust-lang.org/std/result/) and [Option](https://en.wikipedia.org/wiki/Option_type) types** that make error handling explicit in function signatures. This approach uses native JavaScript arrays as containers, providing a uniform pattern that works naturally with existing array methods and [destructuring syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment).
 
 **Option Pattern** (1-tuple): Represents optional values
 
@@ -26,11 +26,11 @@ We will **avoid throwing exceptions** for recoverable errors and instead use **t
 
 ## Why This Approach
 
-- **Explicit error handling**: Function signatures show exactly what can go wrong
-- **Composable**: Array methods like `map`, `flatMap`, and `filter` work naturally
-- **Zero dependencies**: Uses native JavaScript arrays, no external libraries
-- **Familiar syntax**: Destructuring and array methods are well-known patterns
-- **Type-safe**: TypeScript can enforce proper error handling at compile time
+- **Explicit error handling**: [Function signatures](https://www.typescriptlang.org/docs/handbook/2/functions.html) show exactly what can go wrong
+- **Composable**: [Array methods](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) like `map`, [`flatMap`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap), and `filter` work naturally
+- **Zero dependencies**: Uses native JavaScript [arrays](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array), no external libraries
+- **Familiar syntax**: [Destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) and array methods are well-known patterns
+- **Type-safe**: [TypeScript](https://www.typescriptlang.org/docs/handbook/2/basic-types.html) can enforce proper error handling at compile time
 - **Progressive enhancement**: Start simple, add utilities as needed
 - **Functional alignment**: Fits perfectly with our preference for functional patterns
 
@@ -133,7 +133,7 @@ function assertNonNull<T>(value: T | null | undefined, message: string): T {
 
 // ✅ Acceptable: Configuration errors
 function loadConfig(path: string): Config {
-  if (!fs.existsSync(path)) {
+  if (!fs.existsSync(path)) { // See: https://nodejs.org/api/fs.html#fsexistssyncpath
     throw new Error(`Configuration file not found: ${path}`);
   }
   // ... load config
@@ -213,9 +213,14 @@ function handleUserFetch(result: Result<User, string>): UserState {
 
 ## Related ADRs
 
-- **Builds on:** [ADR-0004: Type System Strategy] (Results use types for data modeling)
-- **Builds on:** [ADR-0005: Enum Alternatives] (Error codes use enum-likes)
-- **See also:** [ADR-0007: Functional Programming Style] (Error handling fits functional patterns)
+- **Builds on:** [ADR-0004: Type System Strategy](0004-type-strategy.md) (Results use types for data modeling)
+- **Builds on:** [ADR-0005: Enum Alternatives](0005-enum-likes.md) (Error codes use enum-likes)
+- **Extended by:** [ADR-0007: Functional Programming Style](0007-functional-style.md) (functional patterns compose with Result types)
+- **See also:** [ADR-0010: Domain Modeling with Branded Types](0010-domain-modelling.md) (branded types for error categorization)
+
+---
+
+← [ADR-0005: Enum Alternatives](0005-enum-likes.md) | [ADR-0007: Functional Programming Style](0007-functional-style.md) →
 
 ---
 

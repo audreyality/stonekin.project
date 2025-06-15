@@ -75,7 +75,13 @@ import { ToolRegistry } from '../prelude.ts';
 ## Related ADRs
 
 - **Builds on:** [ADR-0000: Architecture Decision Records](0000-architecture-decision-records.md)
-- **See also:** This will be referenced by file naming conventions and import rules ADRs
+- **Extended by:** [ADR-0002: File Organization](0002-file-organization.md) (builds on module structure)
+- **Extended by:** [ADR-0013: Standard File Patterns](0013-standard-files.md) (implements file organization within modules)
+- **See also:** [ADR-0003: Import/Export Boundaries](0003-boundaries-and-dependencies.md) (enforces module organization)
+
+---
+
+← [ADR-0000: Architecture Decision Records](0000-architecture-decision-records.md) | [ADR-0002: File Organization](0002-file-organization.md) →
 
 ---
 

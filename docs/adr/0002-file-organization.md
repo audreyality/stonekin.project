@@ -80,7 +80,11 @@ project/
 ## Related ADRs
 
 - **Builds on:** [ADR-0001: Module Organization and Folder Structure](0001-module-organization.md)
-- **See also:** Import rules and export conventions will build on these naming patterns
+- **Extended by:** [ADR-0003: Import/Export Boundaries](0003-boundaries-and-dependencies.md) (builds on naming patterns)
+- **Extended by:** [ADR-0011: Naming Conventions and Domain Language](0011-naming-conventions.md) (extends file naming to code-level naming)
+- **Complements:** [ADR-0013: Standard File Patterns](0013-standard-files.md) (both address file organization)
+
+← [ADR-0001: Module Organization](0001-module-organization.md) | [ADR-0003: Boundaries and Dependencies](0003-boundaries-and-dependencies.md) →
 
 ---
 

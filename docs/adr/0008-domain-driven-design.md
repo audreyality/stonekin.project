@@ -103,7 +103,7 @@ interface BadAgent extends AgentData {
 
 ### Progressive Enhancement with Object Static Methods
 
-Use Object static methods to progressively enhance types with behavior:
+Use [Object.assign()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) static methods to progressively enhance types with behavior:
 
 ```typescript
 function makeExecutable<T extends AgentData>(data: T): Executable<T> {
@@ -182,9 +182,15 @@ class ChatAgent extends BaseAgent { /* Prefer composition */ }
 
 ## Related ADRs
 
-- **Builds on:** [ADR-0004: Type System Strategy] (Interfaces for behavior, types for data)
-- **Builds on:** [ADR-0007: Functional Style] (Composition over inheritance)
-- **See also:** [ADR-0003: Import/Export Boundaries] (Module organization for domain objects)
+- **Builds on:** [ADR-0004: Type System Strategy](0004-type-strategy.md) (Interfaces for behavior, types for data)
+- **Builds on:** [ADR-0007: Functional Style](0007-functional-style.md) (Composition over inheritance)
+- **See also:** [ADR-0003: Import/Export Boundaries](0003-boundaries-and-dependencies.md) (Module organization for domain objects)
+- **Extended by:** [ADR-0010: Domain Modeling with Branded Types](0010-domain-modelling.md) (branded types support rich domain modeling)
+- **Extended by:** [ADR-0011: Naming Conventions and Domain Language](0011-naming-conventions.md) (domain-focused naming aligns with DDD principles)
+
+---
+
+← [ADR-0007: Functional Style](0007-functional-style.md) | [ADR-0009: Dependency Inversion](0009-dependency-inversion.md) →
 
 ---
 

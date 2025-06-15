@@ -35,7 +35,7 @@ All documentation will use language from the agentic systems domain rather than 
 
 ### Required Documentation: README.md (NPM Modules)
 
-Every NPM module must have a README.md:
+Every NPM module must have a README.md following [NPM README guidelines](https://docs.npmjs.com/about-npm/readme) and [CommonMark markdown standards](https://commonmark.org/). For consistent formatting, follow [markdownlint rules](https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md) and [prettier markdown formatting](https://prettier.io/docs/en/options.html#prose-wrap):
 
 ```markdown
 # Agent Framework
@@ -101,7 +101,7 @@ Implements **Conversation Aggregate** pattern where ConversationSession is the a
 
 ### TSDoc Standards for Agent Systems
 
-All exported functions must include domain-specific documentation:
+All exported functions must include domain-specific documentation following the [TSDoc specification](https://tsdoc.org/). See also the [TypeScript JSDoc reference](https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html) and [VSCode IntelliSense JSDoc support](https://code.visualstudio.com/docs/languages/javascript#_jsdoc-support) for tooling integration.
 
 ```typescript
 /**
@@ -153,6 +153,10 @@ export interface DataService {
 }
 ```
 
+### _DOMAIN.md Example
+
+**See:** [_DOMAIN.md](./_DOMAIN.md_)
+
 ## Consequences
 
 - **Benefits:**
@@ -170,7 +174,10 @@ export interface DataService {
 
 - **Builds on:** [ADR-0001: Module Organization and Folder Structure](0001-module-organization.md)
 - **Builds on:** [ADR-0002: File Naming and Organization Conventions](0002-file-organization.md)
-- **See also:** [ADR-0008: Domain-Driven Approaches Over Service Patterns](0008-domain-driven-design.md)
+- **Builds on:** [ADR-0011: Naming Conventions and Domain Language](0011-naming-conventions.md) (domain-focused naming supports documentation clarity)
+- **See also:** [ADR-0008: Domain-Driven Approaches Over Service Patterns](0008-domain-driven-design.md) (domain object documentation patterns and factory function documentation)
+
+← [ADR-0011: Naming Conventions](0011-naming-conventions.md) | [ADR-0013: Standard File Patterns](0013-standard-files.md) →
 
 ---
 

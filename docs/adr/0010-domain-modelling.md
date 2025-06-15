@@ -12,7 +12,7 @@ Without strong domain modeling patterns, we get runtime errors that could be cau
 
 ## Decision
 
-We will use **branded types** for domain primitives and **discriminated unions** for complex state modeling. Branded types use type-fest's `Opaque` type to create compile-time distinctions between semantically different values. Discriminated unions use enum-likes as discriminants to model mutually exclusive states.
+We will use **branded types** for domain primitives and **discriminated unions** for complex state modeling. Branded types use [type-fest's `Opaque` type](https://github.com/sindresorhus/type-fest#opaque) to create compile-time distinctions between semantically different values. [Discriminated unions](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#discriminated-unions) use enum-likes as discriminants to model mutually exclusive states.
 
 ## Why This Approach
 
@@ -25,6 +25,8 @@ We will use **branded types** for domain primitives and **discriminated unions**
 ## Implementation
 
 ### Branded Types for Domain Primitives
+
+Use [branded types](https://egghead.io/blog/using-branded-types-in-typescript) for domain primitives:
 
 ```typescript
 // type.ts
@@ -116,9 +118,17 @@ type AgentState = {
 
 ## Related ADRs
 
-- **Builds on:** [ADR-0004: Type System Strategy](0004-type-system-strategy.md)
+- **Builds on:** [ADR-0004: Type System Strategy](0004-type-strategy.md)
 - **Builds on:** [ADR-0005: Enum Alternatives](0005-enum-likes.md)
-- **See also:** [ADR-0006: Error Handling Strategy](0006-error-handling.md)
+- **Builds on:** [ADR-0007: Functional Programming Style](0007-functional-style.md) (immutable data structures complement branded types)
+- **See also:** [ADR-0006: Error Handling Strategy](0006-error-handling.md) (branded types enable type-safe error categories)
+- **See also:** [ADR-0007: Functional Programming Style](0007-functional-style.md) (domain objects align with functional principles)
+- **See also:** [ADR-0008: Domain-Driven Approaches](0008-domain-driven-design.md) (branded types support rich domain modeling)
+- **Extended by:** [ADR-0011: Naming Conventions and Domain Language](0011-naming-conventions.md) (branded type naming patterns)
+
+---
+
+← [ADR-0009: Dependency Management and Injection](0009-dependency-inversion.md) | [ADR-0011: Naming Conventions and Domain Language](0011-naming-conventions.md) →
 
 ---
 

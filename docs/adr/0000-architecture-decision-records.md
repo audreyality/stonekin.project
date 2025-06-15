@@ -76,6 +76,8 @@ enum Status { PENDING = 'pending', COMPLETE = 'complete' }
 - **Builds on:** None (foundational ADR)
 - **See also:** This ADR establishes the pattern for all subsequent architectural decisions
 
+→ [ADR-0001: Module Organization](0001-module-organization.md)
+
 > [!TIP]
 > This section is optional.
 
