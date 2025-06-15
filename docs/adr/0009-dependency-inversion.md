@@ -35,6 +35,8 @@ Define dependency contracts in `api.ts` files using [TypeScript interfaces](http
 
 ```typescript
 // agent/api.ts
+import type { Result } from '@stonekin/ts'; // From ADR-0006
+
 export interface LlmProvider {
   generateResponse(prompt: string): Promise<Result<string, string>>;
 }
@@ -50,22 +52,30 @@ Create factories in `di.ts` files that accept dependencies as curried parameters
 
 ```typescript
 // agent/di.ts
+import type { AgentConfig } from '../type.ts'; // From ADR-0004
+import type { Result } from '@stonekin/ts'; // From ADR-0006
+
 type AgentDependencies = {
   llmProvider: LlmProvider;
   toolExecutor: ToolExecutor;
 };
 
 // Factory function with dependency injection
-function createAgentWithDeps(deps: AgentDependencies, data: AgentData): Agent {
-  return Object.assign({ ...data }, {
-    async execute(request: AgentRequest) {
+function createAgentWithDeps(
+  deps: AgentDependencies, 
+  config: AgentConfig
+): Agent {
+  const agent = Object.assign({ ...config }, {
+    async execute(request: AgentRequest): Promise<Result<AgentResponse, string>> {
       return deps.llmProvider.generateResponse(request.prompt);
     },
     
-    async useTool(name: string, args: unknown) {
+    async useTool(name: string, args: unknown): Promise<Result<ToolResult, string>> {
       return deps.toolExecutor.executeTool(name, args);
     }
   }) as Agent;
+  
+  return agent;
 }
 
 export { createAgentWithDeps };
@@ -78,8 +88,7 @@ Wire dependencies at application startup using [`bind`](https://developer.mozill
 ```typescript
 // app.ts - Application startup
 const dependencies: AgentDependencies = {
-  llmProvider: new OpenAIProvider(),
-  toolExecutor: new McpToolExecutor()
+  // ...
 };
 
 // Create bound factory with dependencies injected
@@ -113,6 +122,7 @@ test('handles llm provider errors', async () => {
   
   const [response, error] = await agent.execute({ prompt: 'Hello' });
   expect(error).toBe('Connection timeout');
+  expect(response).toBeUndefined();
 });
 ```
 

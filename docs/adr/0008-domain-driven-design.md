@@ -46,6 +46,8 @@ We will **favor domain-driven approaches over traditional service patterns**. In
 Create rich domain objects through factory functions rather than anemic data + services:
 
 ```typescript
+import type { AgentConfig } from './type.ts'; // From ADR-0004
+
 // ✅ Preferred: Rich domain object
 type AgentData = {
   readonly id: string;
@@ -53,8 +55,8 @@ type AgentData = {
   readonly config: AgentConfig;
 };
 
-function createAgent(data: AgentData): Agent {
-  return Object.assign({ ...data }, {
+function createAgent(config: AgentConfig): Agent {
+  const agent = Object.assign({ ...config }, {
     async execute(request: AgentRequest): Promise<Result<AgentResponse, string>> {
       return executeAgentRequest(this, request);
     },
@@ -63,6 +65,8 @@ function createAgent(data: AgentData): Agent {
       return this.capabilities.includes(requestType);
     }
   }) as Agent;
+  
+  return agent;
 }
 
 // ❌ Avoid: Anemic data + service
