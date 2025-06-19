@@ -3,7 +3,8 @@
 - This workflow asks Claude to link an ADR into all of our other ADRs.
 - For use with Claude Sonnet 4.
 
-```markdown
+----
+
 # ADR Linking Analysis Task
 
 Analyze the linking structure within **${ADR Number}** and generate a comprehensive linking improvement report.
@@ -47,11 +48,9 @@ Your report must include:
 4. Stop and wait for review feedback
 
 Ready to proceed with ${ADR Number}?
-```
 
 -----
 
-```markdown
 # Apply ADR Linking Recommendations
 
 Implement the specific linking changes recommended in the report for **${ADR Number}**.
@@ -69,4 +68,3 @@ Implement the specific linking changes recommended in the report for **${ADR Num
 - Report when finished with a summary of changes made
 
 Ready to apply the recommendations from the linking analysis report?
-```
