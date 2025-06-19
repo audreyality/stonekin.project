@@ -31,12 +31,9 @@ We will use **curried factory functions and interface-based dependency inversion
 
 ### Interface-Based Dependency Contracts
 
-Define dependency contracts in `api.ts` files using [TypeScript interfaces](https://www.typescriptlang.org/docs/handbook/2/objects.html#interfaces):
+Define dependency contracts in `api.ts` files:
 
 ```typescript
-// agent/api.ts
-import type { Result } from '@stonekin/ts'; // From ADR-0006
-
 export interface LlmProvider {
   generateResponse(prompt: string): Promise<Result<string, string>>;
 }
@@ -48,115 +45,74 @@ export interface ToolExecutor {
 
 ### Curried Factory Functions
 
-Create factories in `di.ts` files that accept dependencies as curried parameters:
+Create factories in `di.ts` files with individual curried parameters:
 
 ```typescript
-// agent/di.ts
-import type { AgentConfig } from '../type.ts'; // From ADR-0004
-import type { Result } from '@stonekin/ts'; // From ADR-0006
-
-type AgentDependencies = {
-  llmProvider: LlmProvider;
-  toolExecutor: ToolExecutor;
-};
-
-// Factory function with dependency injection
-function createAgentWithDeps(
-  deps: AgentDependencies, 
+function createAgent(
+  llmProvider: LlmProvider,
+  toolExecutor: ToolExecutor,
   config: AgentConfig
 ): Agent {
-  const agent = Object.assign({ ...config }, {
-    async execute(request: AgentRequest): Promise<Result<AgentResponse, string>> {
-      return deps.llmProvider.generateResponse(request.prompt);
+  return {
+    ...config,
+    async execute(request: AgentRequest) {
+      return llmProvider.generateResponse(request.prompt);
     },
-    
-    async useTool(name: string, args: unknown): Promise<Result<ToolResult, string>> {
-      return deps.toolExecutor.executeTool(name, args);
+    async useTool(name: string, args: unknown) {
+      return toolExecutor.executeTool(name, args);
     }
-  }) as Agent;
-  
-  return agent;
+  };
 }
-
-export { createAgentWithDeps };
 ```
 
 ### Application-Level Dependency Wiring
 
-Wire dependencies at application startup using [`bind`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind) for [function currying](https://javascript.info/currying-partials):
+Use `bind` for progressive specialization:
 
 ```typescript
-// app.ts - Application startup
-const dependencies: AgentDependencies = {
-  // ...
-};
+const createAgentWithOpenAI = createAgent.bind(null, openAIProvider);
+const createLocalAgent = createAgentWithOpenAI.bind(null, localTools);
 
-// Create bound factory with dependencies injected
-const createAgent = createAgentWithDeps.bind(null, dependencies);
-
-// Use the bound factory to create agents
-const textAgent = createAgent({
-  id: 'text-agent-1',
-  capabilities: ['text-processing'],
-  // ...
-});
-
-const toolAgent = createAgent({
-  id: 'tool-agent-1', 
-  capabilities: ['tool-execution'],
-  // ...
-});
+const agent = createLocalAgent({ id: 'agent-1' });
 ```
 
 ### Testing with Dependency Injection
 
 ```typescript
-// agent/agent.test.ts
-test('handles llm provider errors', async () => {
-  const mockProvider: LlmProvider = {
-    async generateResponse() { return [undefined, 'Connection timeout']; }
-  };
-  
-  const mockDeps = { llmProvider: mockProvider, toolExecutor: mockToolExecutor };
-  const agent = createAgentWithDeps(mockDeps, testAgentData);
-  
-  const [response, error] = await agent.execute({ prompt: 'Hello' });
-  expect(error).toBe('Connection timeout');
-  expect(response).toBeUndefined();
+test('uses mock dependencies', () => {
+  const mockProvider = { async generateResponse() { return [undefined, 'error']; } };
+  const agent = createAgent(mockProvider, mockTools, config);
+  // ...
+});
+
+test('partial application in tests', () => {
+  const createTestAgent = createAgent.bind(null, mockProvider);
+  const agent = createTestAgent(realTools, config);
+  // ...
 });
 ```
 
 ### Cross-Module Communication
 
-Use dependency injection for communication between modules:
-
 ```typescript
-// Parent module defines interfaces in prelude.ts
-export interface EventBus {
-  publish(event: DomainEvent): Promise<void>;
+export interface Logger {
+  log(level: string, message: string): void;
 }
 
-// Child modules depend on parent abstractions via di.ts
-// agent/supervisor/di.ts
-function createAgentSystemWithDeps(
-  deps: { eventBus: EventBus }, 
+function createAgentSystem(
+  logger: Logger,
   config: AgentSystemConfig
 ): AgentSystem {
   return {
     async spawnAgent(data: AgentData) {
-      const agent = createAgent(data);
-      await deps.eventBus.publish({
-        type: 'agent.spawned',
-        agentId: agent.id
-      });
+      logger.log('info', `Spawning agent ${data.id}`);
       // ...
     }
   };
 }
 
-// In application code
-const createAgentSystem = createAgentSystemWithDeps.bind(null, { eventBus });
-// ...
+const createSystemWithLogger = createAgentSystem.bind(null, logger);
+const system = createSystemWithLogger(config);
 ```
 
 ## Consequences
@@ -172,12 +128,7 @@ const createAgentSystem = createAgentSystemWithDeps.bind(null, { eventBus });
   - Manual dependency wiring at application startup
   - Requires understanding of function currying and `bind`
   - More explicit setup compared to framework-based DI
-
-- **Migration:**
-  - Extract service dependencies to interface contracts in `api.ts`
-  - Move factory functions to `di.ts` files
-  - Convert direct imports to dependency parameters
-  - Use `bind` to create dependency-injected factory functions
+  - Parameter order matters for effective currying (most stable dependencies first)
 
 ## Related ADRs
 
@@ -198,5 +149,6 @@ const createAgentSystem = createAgentSystemWithDeps.bind(null, { eventBus });
 
 | Date | Status | Author | Notes |
 |------|--------|--------|-------|
-| 2025-06-13 | Draft | GitHub Copilot | Initial version with curried factory pattern using bind |
+| 2025-06-13 | Draft | Claude | Initial version with curried factory pattern using bind |
 | 2025-06-13 | Active | Audrey | Reviewed and approved |
+| 2025-06-19 | Active | Claude | Fixed to use true currying instead of dependency grouping |
