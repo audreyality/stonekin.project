@@ -189,7 +189,7 @@ class ChatAgent extends BaseAgent { /* Prefer composition */ }
 - **Builds on:** [ADR-0004: Type System Strategy](0004-type-strategy.md) (Interfaces for behavior, types for data)
 - **Builds on:** [ADR-0007: Functional Style](0007-functional-style.md) (Composition over inheritance)
 - **See also:** [ADR-0003: Import/Export Boundaries](0003-boundaries-and-dependencies.md) (Module organization for domain objects)
-- **Extended by:** [ADR-0010: Domain Modeling with Branded Types](0010-domain-modelling.md) (branded types support rich domain modeling)
+- **Extended by:** [ADR-0010: Domain Modeling with Opaque Types](0010-domain-modelling.md) (opaque types support rich domain modeling)
 - **Extended by:** [ADR-0011: Naming Conventions and Domain Language](0011-naming-conventions.md) (domain-focused naming aligns with DDD principles)
 
 ---
@@ -204,3 +204,4 @@ class ChatAgent extends BaseAgent { /* Prefer composition */ }
 |------|--------|--------|-------|
 | 2025-06-13 | Draft | Claude | Initial version emphasizing domain-driven patterns over services |
 | 2025-06-13 | Active | Audrey | Reviewed and approved |
+| 2025-06-18 | Active | Claude | Amended to use opaque types |

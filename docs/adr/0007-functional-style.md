@@ -254,7 +254,7 @@ class WebSocketAgent {
 - **Builds on:** [ADR-0006: Error Handling Strategy](0006-error-handling.md) (Functional patterns compose with Result types)
 - **Extended by:** [ADR-0008: Domain-Driven Design](0008-domain-driven-design.md) (composition over inheritance principles)
 - **Extended by:** [ADR-0009: Dependency Inversion](0009-dependency-inversion.md) (function composition over frameworks)
-- **Extended by:** [ADR-0010: Domain Modeling with Branded Types](0010-domain-modelling.md) (immutable data structures complement branded types)
+- **Extended by:** [ADR-0010: Domain Modeling with Opaque Types](0010-domain-modelling.md) (immutable data structures complement opaque types)
 
 ---
 
@@ -268,3 +268,4 @@ class WebSocketAgent {
 |------|--------|--------|-------|
 | 2025-06-13 | Draft | Claude | Initial version with boundary-scoped immutability |
 | 2025-06-13 | Active | Audrey | Reviewed and approved |
+| 2025-06-18 | Active | Claude | Amended to use opaque types |

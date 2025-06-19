@@ -16,7 +16,7 @@ This directory contains the Architecture Decision Records (ADRs) for the Stoneki
 
 - [ADR-0004: Type System Strategy (Types vs Interfaces)](./0004-type-strategy.md)
 - [ADR-0005: Enum Alternatives and Constant Objects (Enum-likes)](./0005-enum-likes.md)
-- [ADR-0010: Domain Modeling with Branded Types and Discriminated Unions](./0010-domain-modelling.md)
+- [ADR-0010: Domain Modeling with Opaque Types and Discriminated Unions](./0010-domain-modelling.md)
 - [ADR-0011: Naming Conventions and Domain Language](./0011-naming-conventions.md)
 
 ### Programming Patterns & Practices

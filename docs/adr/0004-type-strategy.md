@@ -49,9 +49,9 @@ type AgentState =
   | { readonly status: 'complete'; readonly result: string }
   | { readonly status: 'failed'; readonly error: string };
 
-// ✅ Types for branded primitives
-type AgentId = string & { readonly __brand: 'AgentId' };
-type ConversationId = string & { readonly __brand: 'ConversationId' };
+// ✅ Types for opaque primitives - via type-fest
+type AgentId = Opaque<string, 'AgentId'>;
+type ConversationId = Opaque<string,'ConversationId'>;
 
 // ✅ Types for constant objects (our enum alternative)
 const AgentStatus = { IDLE: 'idle', PROCESSING: 'processing', COMPLETE: 'complete' } as const;
@@ -163,7 +163,7 @@ type UserWithActions = {
 - **Builds on:** [ADR-0001: Module Organization](0001-module-organization.md) (file placement patterns)
 - **Aligns with:** [ADR-0002: File Organization](0002-file-organization.md) (type.ts and api.ts file patterns)
 - **See also:** [ADR-0005: Enum Alternatives](0005-enum-likes.md) (constant object patterns used with types)
-- **Extended by:** [ADR-0010: Domain Modeling with Branded Types](0010-domain-modelling.md) (practical application of type vs interface principles)
+- **Extended by:** [ADR-0010: Domain Modeling with Opaque Types](0010-domain-modelling.md) (practical application of type vs interface principles)
 - **Extended by:** [ADR-0011: Naming Conventions and Domain Language](0011-naming-conventions.md) (naming patterns for types vs interfaces)
 
 ---
@@ -180,3 +180,4 @@ type UserWithActions = {
 | 2025-06-13 | Draft | Audrey | Removed function property preference; it belongs in a separate ADR |
 | 2025-06-13 | Draft | Audrey | Added declaration merging benefit to the whys list |
 | 2025-06-13 | Active | Audrey | Reviewed and approved |
+| 2025-06-18 | Active | Claude | Amended to use opaque types |

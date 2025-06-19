@@ -1,4 +1,4 @@
-# ADR-0010: Domain Modeling with Branded Types and Discriminated Unions
+# ADR-0010: Domain Modeling with Opaque Types and Discriminated Unions
 
 ## Status
 
@@ -12,21 +12,21 @@ Without strong domain modeling patterns, we get runtime errors that could be cau
 
 ## Decision
 
-We will use **branded types** for domain primitives and **discriminated unions** for complex state modeling. Branded types use [type-fest's `Opaque` type](https://github.com/sindresorhus/type-fest#opaque) to create compile-time distinctions between semantically different values. [Discriminated unions](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#discriminated-unions) use enum-likes as discriminants to model mutually exclusive states.
+We will use **opaque types** for domain primitives and **discriminated unions** for complex state modeling. Opaque types use [type-fest's `Opaque` type](https://github.com/sindresorhus/type-fest#opaque) to create compile-time distinctions between semantically different values with zero runtime cost. [Discriminated unions](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#discriminated-unions) use enum-likes as discriminants to model mutually exclusive states.
 
 ## Why This Approach
 
 - **Compile-time safety**: Prevents mixing semantically different primitive values
-- **Zero runtime cost**: Branding exists only at the type level
+- **Zero runtime cost**: Opaque typing exists only at the type level
 - **Self-documenting**: Types express domain intent explicitly
 - **Exhaustive checking**: Discriminated unions enable complete pattern matching
-- **JSON compatible**: Branded types serialize as their underlying primitives
+- **JSON compatible**: Opaque types serialize as their underlying primitives
 
 ## Implementation
 
-### Branded Types for Domain Primitives
+### Opaque Types for Domain Primitives
 
-Use [branded types](https://egghead.io/blog/using-branded-types-in-typescript) for domain primitives:
+Use [opaque types](https://github.com/sindresorhus/type-fest#opaque) for domain primitives:
 
 ```typescript
 // type.ts
@@ -112,7 +112,7 @@ type AgentState = {
   - Zero runtime overhead for type safety
 
 - **Trade-offs:**
-  - Requires constructor functions for branded type creation
+  - Requires constructor functions for opaque type creation
   - More verbose type definitions than plain primitives
   - Additional dependency on type-fest
 
@@ -120,11 +120,11 @@ type AgentState = {
 
 - **Builds on:** [ADR-0004: Type System Strategy](0004-type-strategy.md)
 - **Builds on:** [ADR-0005: Enum Alternatives](0005-enum-likes.md)
-- **Builds on:** [ADR-0007: Functional Programming Style](0007-functional-style.md) (immutable data structures complement branded types)
-- **See also:** [ADR-0006: Error Handling Strategy](0006-error-handling.md) (branded types enable type-safe error categories)
+- **Builds on:** [ADR-0007: Functional Programming Style](0007-functional-style.md) (immutable data structures complement opaque types)
+- **See also:** [ADR-0006: Error Handling Strategy](0006-error-handling.md) (opaque types enable type-safe error categories)
 - **See also:** [ADR-0007: Functional Programming Style](0007-functional-style.md) (domain objects align with functional principles)
-- **See also:** [ADR-0008: Domain-Driven Approaches](0008-domain-driven-design.md) (branded types support rich domain modeling)
-- **Extended by:** [ADR-0011: Naming Conventions and Domain Language](0011-naming-conventions.md) (branded type naming patterns)
+- **See also:** [ADR-0008: Domain-Driven Approaches](0008-domain-driven-design.md) (opaque types support rich domain modeling)
+- **Extended by:** [ADR-0011: Naming Conventions and Domain Language](0011-naming-conventions.md) (opaque type naming patterns)
 
 ---
 
@@ -138,3 +138,4 @@ type AgentState = {
 |------|--------|--------|-------|
 | 2025-06-14 | Active | GitHub Copilot | Initial domain modeling patterns |
 | 2025-06-14 | Active | Audrey | Reviewed and approved |
+| 2025-06-18 | Active | Claude | Amended to use opaque types |

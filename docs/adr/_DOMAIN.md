@@ -62,7 +62,7 @@ These entities will be used consistently across all examples:
 When creating examples, follow these established patterns from the ADRs:
 
 - Use **Result types** for error handling ([ADR-0006](0006-error-handling.md))
-- Apply **branded types** for domain identity ([ADR-0010](0010-domain-modelling.md))
+- Apply **opaque types** for domain identity ([ADR-0010](0010-domain-modelling.md))
 - Model exclusive states with **discriminated unions** ([ADR-0005](0005-enum-likes.md), [ADR-0010](0010-domain-modelling.md))
 - Create entities through **factory functions** ([ADR-0008](0008-domain-driven-design.md))
 - Structure tool communication using **MCP conventions**

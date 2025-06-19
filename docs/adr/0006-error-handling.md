@@ -216,7 +216,7 @@ function handleUserFetch(result: Result<User, string>): UserState {
 - **Builds on:** [ADR-0004: Type System Strategy](0004-type-strategy.md) (Results use types for data modeling)
 - **Builds on:** [ADR-0005: Enum Alternatives](0005-enum-likes.md) (Error codes use enum-likes)
 - **Extended by:** [ADR-0007: Functional Programming Style](0007-functional-style.md) (functional patterns compose with Result types)
-- **See also:** [ADR-0010: Domain Modeling with Branded Types](0010-domain-modelling.md) (branded types for error categorization)
+- **See also:** [ADR-0010: Domain Modeling with Opaque Types](0010-domain-modelling.md) (opaque types for error categorization)
 
 ---
 
@@ -231,3 +231,4 @@ function handleUserFetch(result: Result<User, string>): UserState {
 | 2025-06-13 | Draft | Claude | Initial version with tuple-based Result/Option patterns |
 | 2025-06-13 | Draft | Audrey | Extracted types and utilities |
 | 2025-06-13 | Active | Audrey | Reviewed and approved |
+| 2025-06-18 | Active | Claude | Amended to use opaque types |

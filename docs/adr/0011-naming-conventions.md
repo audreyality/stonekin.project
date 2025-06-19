@@ -196,7 +196,7 @@ function procReq(req: Request): Response { /* Use full words */ }
 - **Builds on:** [ADR-0002: File Naming and Organization Conventions](0002-file-organization.md)
 - **Supports:** [ADR-0012: Module Documentation Standards](0012-documentation.md) (domain-focused naming improves documentation clarity)
 - **See also:** [ADR-0005: Enum-like Objects and Const Assertions](0005-enum-likes.md) (naming conventions for constants)
-- **See also:** [ADR-0010: Domain Modeling with Branded Types](0010-domain-modelling.md) (branded type naming patterns)
+- **See also:** [ADR-0010: Domain Modeling with Opaque Types](0010-domain-modelling.md) (opaque type naming patterns)
 - **See also:** [ADR-0013: Standard File Patterns](0013-standard-files.md) (file naming that implements these conventions)
 
 ← [ADR-0010: Domain Modeling](0010-domain-modelling.md) | [ADR-0012: Documentation Standards](0012-documentation.md) →
