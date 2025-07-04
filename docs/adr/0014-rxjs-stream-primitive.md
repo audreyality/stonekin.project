@@ -16,9 +16,9 @@ We choose RxJS as the official stream abstraction for the Stonekin SDK. All perc
 
 **Key principles:**
 
-- **Encapsulation:** Behaviors are encapsulated using named interfaces (e.g., `LongTermMemory`, `ReflectionSink`, `PlannerInterface`).
+- **Encapsulation:** Behaviors are encapsulated using named interfaces (e.g., `ConversationSession`, `ToolExecutor`, `Agent`).
 - **Generic Operators:** Operators work generically, accepting lambdas and configuration just like native RxJS operators.
-- **Declarative Surface:** Operators like `reflectOn()`, `storeTo()`, and `vectorize()` provide a declarative interface.
+- **Declarative Surface:** Operators like `processWithAgent()`, `executeTools()`, and `storeTo()` provide a declarative interface.
 - **Semantic Grouping:** Observers and Subjects are grouped into interfaces for routing, injection, and introspection.
 
 ### Specific Guidelines/Patterns
@@ -43,33 +43,38 @@ We choose RxJS as the official stream abstraction for the Stonekin SDK. All perc
 
 ## Implementation
 
-### Implementation Pattern 1
-
-#### Semantic Interface
+### Domain Interface Pattern
 
 ```typescript
-interface LongTermMemory {
-  store: Observer<MemoryEntry>;
-  search(query: string): Observable<SearchResult>;
+interface ConversationSession {
+  // ...existing properties...
+  messageStream?: Subject<Message>;
+  update(response: AgentResponse): void; // existing method
+  searchMessages(query: string): Observable<Message>;
 }
 ```
 
-#### Operator
+### Generic Operator Pattern
 
 ```typescript
-function storeTo(memory: { store: Observer<T> }): OperatorFunction<T, T> {
-  return tap(value => memory.store.next(value));
+function storeTo(sink: { store: Observer<T> }): OperatorFunction<T, T> {
+  return tap(value => sink.store.next(value));
+}
+
+function processWithAgent(agent: Agent): OperatorFunction<UserInput, AgentResponse> {
+  return switchMap(input => from(agent.process(input)));
 }
 ```
 
 ### Application
 
 ```typescript
-agentStream.pipe(
-  reflectOn(),
-  storeTo(agentContext.memory),
-  logStream("thought")
-)
+userInputs.pipe(
+  processWithAgent(agent),
+  tap(response => session.update(response)),
+  storeTo({ store: session.messageStream }),
+  logStream("agent-interaction")
+).subscribe();
 ```
 
 ## Consequences
@@ -86,12 +91,14 @@ agentStream.pipe(
 
 - **Builds on:** [ADR-0004: Type Strategy](0004-type-strategy.md) (Defines type strategy for interfaces)
 - **See also:** [ADR-0008: Domain-Driven Design](0008-domain-driven-design.md) (Provides context for semantic interfaces)
+- **See also:** [_DOMAIN.md](../_DOMAIN.md) (Provides domain vocabulary for examples)
 
 ---
 
 ## Decision Log
 
-| Date       | Status | Author           | Notes                               |
-|------------|--------|------------------|-------------------------------------|
-| 2025-07-04 | Draft  | ChatGPT (Daemon) | Initial draft                       |
-| 2025-07-04 | Draft  | Copilot (GPT 4o) | Improve consistency with other ADRs |
+| Date       | Status | Author                      | Notes                               |
+|------------|--------|-----------------------------|-------------------------------------|
+| 2025-07-04 | Draft  | ChatGPT (Daemon)            | Initial draft                       |
+| 2025-07-04 | Draft  | Copilot (GPT 4o)            | Improve consistency with other ADRs |
+| 2025-07-04 | Draft  | Copilot (Claude Sonnet 4)   | Replace abstract examples with domain-aligned patterns, streamline implementation section |
