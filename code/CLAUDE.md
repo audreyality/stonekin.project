@@ -88,6 +88,28 @@
 - ALLOWED: Third-party integration MAY require mutable state management
 - REQUIRED: Internal mutation MUST NOT leak through module interfaces
 
+### Stream Primitives & RxJS Integration
+
+**Core Decision:**
+
+- REQUIRED: RxJS is the official stream abstraction for the Stonekin SDK
+- REQUIRED: All perception, memory, action, and supervision MUST flow through RxJS primitives
+- REQUIRED: Custom behaviors and memory sinks SHOULD be built as implementations of RxJS interfaces
+
+**RxJS Primitive Mapping:**
+
+- REQUIRED: Use `Observable` for perceptions
+- REQUIRED: Use `SubjectLike` for memory and tool interfaces  
+- REQUIRED: Use `Observer` for side-effect endpoints
+- REQUIRED: Use `SchedulerLike` for time and priority contexts
+
+**Design Principles:**
+
+- REQUIRED: **Semantic Grouping:** Observers and Subjects MUST be grouped into interfaces for routing, injection, and introspection
+- REQUIRED: **Generic Operators:** Operators SHOULD work generically, accepting lambdas and configuration just like native RxJS operators
+- REQUIRED: Stream-based architectures MUST integrate with existing Result/Option patterns for error handling
+- REQUIRED: RxJS streams crossing module boundaries MUST maintain immutability constraints
+
 ## Type System Design
 
 ### Types vs Interfaces Strategy
@@ -544,6 +566,8 @@ interface IToolExecutor { /* No 'I' prefix */ }
 - REQUIRED: `type-fest` package for `Opaque` type utility
 - CONSTRAINT: Must use type-fest's Opaque implementation, not custom branded types
 - REQUIRED: `import { Option } from "@stokekin/ts"` for optional value handling
+- REQUIRED: `rxjs` package for stream primitives and reactive programming
+- CONSTRAINT: SHOULD use RxJS for all perception, memory, action, and supervision flows
 
 ### TSDoc Example Template
 
