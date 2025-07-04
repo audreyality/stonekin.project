@@ -255,6 +255,7 @@ class WebSocketAgent {
 - **Extended by:** [ADR-0008: Domain-Driven Design](0008-domain-driven-design.md) (composition over inheritance principles)
 - **Extended by:** [ADR-0009: Dependency Inversion](0009-dependency-inversion.md) (function composition over frameworks)
 - **Extended by:** [ADR-0010: Domain Modeling with Opaque Types](0010-domain-modelling.md) (immutable data structures complement opaque types)
+- **Implemented by:** [ADR-0014: RxJS Stream Primitive](0014-rxjs-stream-primitive.md) (Stream composition exemplifies functional programming principles)
 
 ---
 

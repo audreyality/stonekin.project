@@ -138,6 +138,7 @@ const system = createSystemWithLogger(config);
 - **Builds on:** [ADR-0007: Functional Style](0007-functional-style.md) (Function composition over frameworks)
 - **See also:** [ADR-0006: Error Handling](0006-error-handling.md) (Result type patterns in DI)
 - **See also:** [ADR-0008: Domain-Driven Design](0008-domain-driven-design.md) (Factory patterns for domain objects)
+- **Implemented by:** [ADR-0014: RxJS Stream Primitive](0014-rxjs-stream-primitive.md) (Stream interfaces enable dependency injection)
 
 ---
 

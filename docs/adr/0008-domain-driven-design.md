@@ -191,6 +191,7 @@ class ChatAgent extends BaseAgent { /* Prefer composition */ }
 - **See also:** [ADR-0003: Import/Export Boundaries](0003-boundaries-and-dependencies.md) (Module organization for domain objects)
 - **Extended by:** [ADR-0010: Domain Modeling with Opaque Types](0010-domain-modelling.md) (opaque types support rich domain modeling)
 - **Extended by:** [ADR-0011: Naming Conventions and Domain Language](0011-naming-conventions.md) (domain-focused naming aligns with DDD principles)
+- **Implemented by:** [ADR-0014: RxJS Stream Primitive](0014-rxjs-stream-primitive.md) (Stream interfaces enable behavioral composition)
 
 ---
 

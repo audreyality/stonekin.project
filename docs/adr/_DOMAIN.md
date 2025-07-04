@@ -39,6 +39,9 @@ These entities will be used consistently across all examples:
 - **UserInput**: Standardized format for user requests and context
 - **Message**: Communication unit with role attribution (user/agent/tool) (see [ADR-0012](0012-documentation.md))
 - **ToolResult**: Standardized output format from tool execution
+- **MessageStream**: Observable sequence of conversation messages (see [ADR-0014](0014-rxjs-stream-primitive.md))
+- **ToolStream**: Observable sequence of tool executions (see [ADR-0014](0014-rxjs-stream-primitive.md))
+- **PerceptionStream**: Observable sequence of agent perceptions (see [ADR-0014](0014-rxjs-stream-primitive.md))
 
 ## Domain Relationships
 
@@ -65,5 +68,6 @@ When creating examples, follow these established patterns from the ADRs:
 - Apply **opaque types** for domain identity ([ADR-0010](0010-domain-modelling.md))
 - Model exclusive states with **discriminated unions** ([ADR-0005](0005-enum-likes.md), [ADR-0010](0010-domain-modelling.md))
 - Create entities through **factory functions** ([ADR-0008](0008-domain-driven-design.md))
+- Use **stream primitives** for reactive pipelines ([ADR-0014](0014-rxjs-stream-primitive.md))
 - Structure tool communication using **MCP conventions**
 - Maintain clear **import boundaries** between modules ([ADR-0003](0003-boundaries-and-dependencies.md))

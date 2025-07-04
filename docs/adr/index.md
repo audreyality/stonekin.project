@@ -25,6 +25,7 @@ This directory contains the Architecture Decision Records (ADRs) for the Stoneki
 - [ADR-0007: Functional Programming Style Over Object-Oriented Patterns](./0007-functional-style.md)
 - [ADR-0008: Domain-Driven Approaches Over Service Patterns](./0008-domain-driven-design.md)
 - [ADR-0009: Dependency Management and Injection](./0009-dependency-inversion.md)
+- [ADR-0014: Adopt RxJS as Stream Primitive](./0014-rxjs-stream-primitive.md)
 
 ### Documentation
 
