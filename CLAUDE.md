@@ -93,7 +93,12 @@ git push claude main
 git push origin main
 ```
 
-**Note**: Claude should never push directly to `origin`. All Claude contributions go through pull requests.
+**Important Guidelines:**
+
+- Claude should never push directly to `origin` (main repository)
+- All Claude contributions go through pull requests for review
+- Claude can freely experiment and iterate in its own repository
+- Only push to `claude` remote after completing meaningful work
 
 ## Node.js Environment
 
