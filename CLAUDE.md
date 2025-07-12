@@ -16,14 +16,7 @@ The project follows a domain-driven structure:
 
 ## Markdown Linting
 
-The project uses `.markdownlint.json` for markdown linting configuration. Currently configured rules:
-
-- `line-length`: disabled (no line length limit)
-- `no-inline-html`: allows `<span>` elements only
-
 ### Terminal Commands for Markdown Linting
-
-Markdownlint is installed as a dev dependency. Use npm scripts for linting:
 
 ```bash
 # Lint all markdown files in the project
@@ -37,17 +30,9 @@ npx markdownlint-cli2 "docs/**/*.md"
 npx markdownlint-cli2 README.md
 ```
 
-Note: The following directories are excluded from linting:
+Note: Configuration is in `.markdownlint.json`. Exclusions are handled automatically.
 
-- `node_modules/` - Third-party dependencies
-- `.prompts/` - Prompt templates with special formatting
-- `.templates/` - Template files with placeholder content
-
-## TypeScript Configuration
-
-TypeScript is configured in `code/core/tsconfig.json`. The project uses TypeScript 5.8.3.
-
-### Terminal Commands for TypeScript
+## TypeScript Commands
 
 ```bash
 # Type check the core module
@@ -60,45 +45,32 @@ cd code/core && npx tsc
 cd code/core && npx tsc --watch
 ```
 
-## Git Configuration
+## Git Hooks
 
-The project is a git repository with main branch as the default. Current `.gitignore` excludes:
+Pre-commit hooks automatically run quality checks before commits.
 
-- Node.js dependencies and build artifacts
-- Environment files
-- IDE configurations
-- OS-generated files
-- Logs and temporary files
+```bash
+# Git hooks run automatically, but you can test them manually:
+npm run lint:md
 
-## Project Dependencies
+# To bypass hooks in emergency (use sparingly):
+git commit --no-verify -m "emergency commit"
+```
 
-### Development Tools Not Yet Configured
+## Development Environment Status
 
-The following tools are commonly used but not yet configured in this project:
+### ✅ Configured Tools
 
-- **ESLint** - No configuration found
-- **Testing Framework** - No test runner configured in package.json
+- **Markdown linting** - markdownlint-cli2 with `npm run lint:md`
+- **Git hooks** - Husky pre-commit hooks for quality checks
+- **Package management** - Root package.json for dev dependencies
 
-### Recommendations for Future Setup
+### 🔄 Future Considerations
 
-1. ✅ **Markdown linting** - Completed! Use `npm run lint:md`
-
-2. **Consider adding ESLint** for TypeScript/JavaScript linting
-
-3. **Set up a testing framework** appropriate for the SDK development
-
-4. **Add Husky** for pre-commit hooks to ensure code quality
+- **ESLint** - TypeScript/JavaScript linting (when modules are ready)
+- **Testing framework** - Test runner setup (when modules are ready)
+- **CI/CD pipeline** - Automated build and deployment
 
 ## VSCode Integration
 
-The project includes `.markdownlint.json` which is automatically used by VSCode's markdown linting extensions. The `.claude/settings.json` file is available for Claude-specific configurations.
-
-## Next Steps
-
-Please let me know which of these areas you'd like to address:
-
-1. Setting up proper dependency management for linting tools
-2. Configuring ESLint and Prettier for TypeScript code
-3. Setting up a testing framework
-4. Creating npm scripts for common development tasks
-5. Establishing a CI/CD pipeline configuration
+The project includes `.markdownlint.json` which is automatically used by VSCode's markdown linting extensions.
