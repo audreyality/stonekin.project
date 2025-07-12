@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@modelcontextprotocol/server-sequential-thinking": "^2025.7.1",
     "husky": "^9.1.7",
     "markdownlint-cli2": "^0.18.1"
   }

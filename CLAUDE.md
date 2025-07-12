@@ -57,10 +57,28 @@ npm run lint:md
 git commit --no-verify -m "emergency commit"
 ```
 
+## Node.js Environment
+
+### Required Version
+
+- **Node.js v23.11** (managed via nvm)
+
+### Setup Commands
+
+```bash
+# Install and use the correct Node.js version
+nvm install 23.11
+nvm use 23.11
+
+# Verify version
+node --version  # Should show v23.11.x
+```
+
 ## Development Environment Status
 
 ### ✅ Configured Tools
 
+- **Node.js** - v23.11 with nvm for version management
 - **Markdown linting** - markdownlint-cli2 with `npm run lint:md`
 - **Git hooks** - Husky pre-commit hooks for quality checks
 - **Package management** - Root package.json for dev dependencies
@@ -70,6 +88,26 @@ git commit --no-verify -m "emergency commit"
 - **ESLint** - TypeScript/JavaScript linting (when modules are ready)
 - **Testing framework** - Test runner setup (when modules are ready)
 - **CI/CD pipeline** - Automated build and deployment
+
+## Sequential Thinking Tool
+
+Use `mcp__sequential-thinking__sequentialthinking` for complex implementation decisions requiring systematic analysis:
+
+**Always use for:**
+
+- Implementation approach analysis (multiple viable patterns)
+- API design trade-offs (usability vs flexibility vs maintainability)
+- Performance optimization analysis and bottleneck identification
+- Error handling analysis
+- Testing approach selection (unit vs integration vs e2e)
+- Complex debugging when multiple factors could be involved
+- Refactoring planning with multiple interdependent changes
+
+**Don't use for:**
+
+- Simple implementations following established patterns
+- Straightforward tasks with clear solutions
+- Basic CRUD operations or standard configurations
 
 ## VSCode Integration
 
