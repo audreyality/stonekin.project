@@ -1,0 +1,59 @@
+{
+  "name": "Stonekin Development",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "devcontainer",
+  "workspaceFolder": "/workspace",
+  
+  // Use zsh as default shell
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "terminal.integrated.profiles.linux": {
+          "zsh": {
+            "path": "/bin/zsh"
+          }
+        },
+        "editor.formatOnSave": false,
+        "editor.tabSize": 2,
+        "files.insertFinalNewline": true,
+        "files.trimTrailingWhitespace": true,
+        "markdown.validate.enabled": true
+      },
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "eamodio.gitlens",
+        "davidanson.vscode-markdownlint",
+        "ms-vscode.vscode-typescript-next",
+        "github.copilot",
+        "ms-vscode-remote.remote-containers"
+      ]
+    }
+  },
+  
+  // Run commands after container is created
+  "postCreateCommand": "echo 'Welcome to Stonekin Development Environment!' && zsh",
+  
+  // User to run as
+  "remoteUser": "claude",
+  
+  // Environment variables
+  "containerEnv": {
+    "MEMORY_FILE_PATH": "/workspace/memory"
+  },
+  
+  // Forward ports if needed
+  "forwardPorts": [],
+  
+  // Mounts - handled by docker-compose.yml
+  "mounts": [],
+  
+  // Features to add to the dev container
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {
+      "ppa": true,
+      "version": "latest"
+    }
+  }
+}

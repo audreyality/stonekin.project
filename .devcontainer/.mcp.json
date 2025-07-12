@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "sequential-thinking": {
+      "command": "npx",
+      "args": [
+        "@modelcontextprotocol/server-sequential-thinking"
+      ]
+    },
+    "basic-memory": {
+      "command": "/home/claude/.local/bin/basic-memory",
+      "args": [
+        "--storage",
+        "/workspace/memory"
+      ]
+    }
+  }
+}

@@ -1,0 +1,61 @@
+services:
+  devcontainer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: stonekin-dev
+    hostname: stonekin-dev
+    
+    # Volumes for development
+    volumes:
+      # Project workspace
+      - ..:/workspace:cached
+      
+      # Memory storage at root level (not under /code)
+      - stonekin-memory:/workspace/memory
+      
+      # Git credentials for Claude (from repository)
+      - ../.gitconfig-claude:/home/claude/.gitconfig:ro
+      - ../.ssh-claude:/home/claude/.ssh:ro
+      
+      # Preserve shell history
+      - stonekin-history:/home/claude/.history
+      
+      # Docker socket for potential future needs
+      # - /var/run/docker.sock:/var/run/docker.sock
+    
+    # Environment variables
+    environment:
+      - TERM=xterm-256color
+      - SHELL=/bin/zsh
+      - MEMORY_FILE_PATH=/workspace/memory
+    
+    # Keep container running
+    command: sleep infinity
+    
+    # Network for future services
+    networks:
+      - stonekin-network
+    
+    # Resource limits (adjust as needed)
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 8G
+        reservations:
+          cpus: '2'
+          memory: 4G
+
+# Named volumes for persistence
+volumes:
+  stonekin-memory:
+    driver: local
+  stonekin-history:
+    driver: local
+
+# Network for future service communication
+networks:
+  stonekin-network:
+    driver: bridge
+    name: stonekin-network

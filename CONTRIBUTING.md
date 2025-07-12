@@ -2,52 +2,65 @@
 
 ## Build Environment Setup
 
+**⚠️ IMPORTANT: The Stonekin project requires a containerized development environment. All development must be done inside the provided DevContainer. Host-based development is not supported.**
+
 ### Prerequisites
 
-- **Node.js v23.11** (managed via nvm)
-- **Git** for version control
+- **Docker Desktop** - Required for the development container
+- **VSCode** (recommended) - For the best development experience
 
 ### Initial Setup
 
-1. **Install Node.js**
+1. **Install Docker Desktop**
+
+   Download and install [Docker Desktop](https://www.docker.com/products/docker-desktop/) for your platform.
+
+2. **Clone and Initialize**
 
    ```bash
-   # Install and use the correct Node.js version
-   nvm install 23.11
-   nvm use 23.11
+   git clone <repository-url>
+   cd stonekin.project
    
-   # Verify version
-   node --version  # Should show v23.11.x
-   ```
-
-2. **Install Dependencies**
-
-   ```bash
-   npm install
-   ```
-
-3. **Verify Setup**
-
-   ```bash
-   # Run markdown linting to test the build environment
-   npm run lint:md
+   # Initialize development environment
+   CLAUDE_EMAIL=claude@yourdomain.com npm run init:dev
    ```
 
 ### Available Commands
 
-#### Markdown Linting
+#### Container Management (DevContainer)
+
+```bash
+# Start the development container
+npm run dev:up
+
+# Enter the container shell (zsh)
+npm run dev:shell
+
+# View container logs
+npm run dev:logs
+
+# Rebuild container from scratch
+npm run dev:rebuild
+
+# Stop the container
+npm run dev:down
+
+# Remove container and volumes
+npm run dev:clean
+
+# Check container status
+npm run dev:status
+```
+
+#### Development Commands (inside container)
 
 ```bash
 # Lint all markdown files
 npm run lint:md
 
-# Lint and fix auto-fixable issues
+# Lint and fix auto-fixable issues  
 npm run lint:md:fix
-```
 
-#### TypeScript (Core Module)
-
-```bash
 # Type check the core module
 cd code/core && npx tsc --noEmit
 
@@ -58,17 +71,102 @@ cd code/core && npx tsc
 cd code/core && npx tsc --watch
 ```
 
-#### Git Hooks
+**Note**: All development commands must be run inside the DevContainer. Git hooks will run automatically on commits.
 
-Pre-commit hooks automatically run quality checks. They're managed by Husky and run automatically, but you can test them manually:
+## DevContainer Workflow
+
+The project uses a fully configured development container with Claude Code, MCP servers, and all development tools:
+
+1. **Using VSCode** (Recommended)
+   - Open the project in VSCode
+   - When prompted, click "Reopen in Container"
+   - VSCode will build and connect to the container
+   - Terminal opens with zsh at `/workspace`
+
+2. **Using Command Line**
+
+   ```bash
+   # Start container
+   npm run dev:up
+   
+   # Enter container
+   npm run dev:shell
+   ```
+
+3. **Automated Development Setup**
+
+   Run the initialization script to set up all credentials and check requirements:
+
+   ```bash
+   # Basic setup (email required)
+   CLAUDE_EMAIL=claude@yourdomain.com npm run init:dev
+   
+   # Advanced setup with custom parameters
+   CLAUDE_EMAIL=claude@yourdomain.com \
+   CLAUDE_NAME="Claude Assistant" \
+   GIT_EDITOR=vim \
+   DEFAULT_BRANCH=main \
+   ./scripts/init-dev.sh
+   ```
+
+   **Configuration Parameters:**
+   - `CLAUDE_EMAIL` (required): Email for Claude's git commits
+   - `CLAUDE_NAME` (optional): Git user name (default: "Claude (AI Assistant)")  
+   - `GIT_EDITOR` (optional): Git editor preference (default: "nano")
+   - `DEFAULT_BRANCH` (optional): Default git branch name (default: "main")
+
+   **The script will:**
+   - Create `.gitconfig-claude` with Claude's git identity
+   - Generate SSH keys in `.ssh-claude/` directory
+   - Create the memory directory
+   - Verify Docker is running
+
+   **Note**: All credential files are automatically excluded from git commits via `.gitignore`.
+
+## Security Files and Git Exclusions
+
+The project includes several files that contain sensitive information and are automatically excluded from version control:
+
+### Excluded Files (.gitignore)
 
 ```bash
-# Test pre-commit hooks manually
-npm run lint:md
+# Claude's credentials (security)
+.gitconfig-claude       # Git identity configuration (email configurable)
+.ssh-claude/            # SSH keys directory
 
-# Bypass hooks in emergency (use sparingly)
-git commit --no-verify -m "emergency commit"
+# Memory system temporary files
+memory/.tmp/
+memory/*.tmp
+memory/*.swp
 ```
+
+### Manual Setup (fallback only)
+
+If the automated script `./scripts/init-dev.sh` doesn't work, you can manually create these files:
+
+1. **Create Git Config** (`.gitconfig-claude`):
+
+   ```ini
+   [user]
+       name = Claude (AI Assistant)
+       email = your-claude-email@domain.com
+   [core]
+       editor = nano
+   [init]
+       defaultBranch = main
+   ```
+
+2. **Generate SSH Keys** (`.ssh-claude/`):
+
+   ```bash
+   mkdir -p .ssh-claude
+   ssh-keygen -t ed25519 -f .ssh-claude/id_ed25519 -C "your-claude-email@domain.com" -N ""
+   chmod 700 .ssh-claude
+   chmod 600 .ssh-claude/id_ed25519
+   chmod 644 .ssh-claude/id_ed25519.pub
+   ```
+
+**Important**: Never commit these files to version control. They are already excluded in `.gitignore`.
 
 ## Development Guidelines
 
@@ -79,8 +177,11 @@ git commit --no-verify -m "emergency commit"
 
 ## Project Structure
 
+- `/.devcontainer` - Development container configuration
 - `/code` - Programming implementations and SDK code
-- `/docs` - Documentation including ADRs and known unknowns  
-- Root level - Project configuration and high-level documentation
+- `/docs` - Documentation including ADRs and known unknowns
+- `/memory` - Knowledge management system (excluded from commits)
+- `/scripts` - Development automation scripts
+- Root level - Project configuration and documentation
 
-For detailed development information, see `CLAUDE.md` and the documentation in `/docs`.
+**Important**: All development work happens inside the DevContainer at `/workspace`. See `CLAUDE.md` for detailed guidelines.

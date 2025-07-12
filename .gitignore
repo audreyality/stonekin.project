@@ -66,3 +66,13 @@ jspm_packages/
 # Temporary folders
 tmp/
 temp/
+
+# Memory system
+# Only ignore temporary memory files, not the structure
+memory/.tmp/
+memory/*.tmp
+memory/*.swp
+
+# Claude's credentials (security)
+.gitconfig-claude
+.ssh-claude/

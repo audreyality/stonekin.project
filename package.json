@@ -4,10 +4,20 @@
   "private": true,
   "description": "Stonekin SDK - Development tooling and workspace configuration",
   "scripts": {
+    "setup": "npm install",
+    "init:dev": "./scripts/init-dev.sh",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint:md": "markdownlint-cli2 '**/*.md' '!**/node_modules/**' '!**/.prompts/**' '!**/.templates/**'",
     "lint:md:fix": "markdownlint-cli2 '**/*.md' '!**/node_modules/**' '!**/.prompts/**' '!**/.templates/**' --fix",
-    "prepare": "husky"
+    "prepare": "husky",
+    "dev:up": "docker-compose -f .devcontainer/docker-compose.yml up -d",
+    "dev:down": "docker-compose -f .devcontainer/docker-compose.yml down",
+    "dev:rebuild": "docker-compose -f .devcontainer/docker-compose.yml build --no-cache",
+    "dev:logs": "docker-compose -f .devcontainer/docker-compose.yml logs -f",
+    "dev:shell": "docker-compose -f .devcontainer/docker-compose.yml exec devcontainer zsh",
+    "dev:clean": "docker-compose -f .devcontainer/docker-compose.yml down -v",
+    "dev:restart": "npm run dev:down && npm run dev:up",
+    "dev:status": "docker-compose -f .devcontainer/docker-compose.yml ps"
   },
   "keywords": [],
   "author": "",

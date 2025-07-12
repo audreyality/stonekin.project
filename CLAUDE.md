@@ -12,6 +12,8 @@ The project follows a domain-driven structure:
 
 - `/code` - Programming implementations and SDK code
 - `/docs` - Documentation including ADRs and known unknowns
+- `/memory` - Knowledge management system (independent of code constraints)
+- `/.devcontainer` - Development container configuration
 - Root level - Project configuration and high-level documentation
 
 ## Markdown Linting
@@ -31,6 +33,8 @@ npx markdownlint-cli2 README.md
 ```
 
 Note: Configuration is in `.markdownlint.json`. Exclusions are handled automatically.
+
+**IMPORTANT:** After writing any markdown file, immediately run `npm run lint:md:fix` to distinguish meaningful linting issues from auto-fixable formatting problems.
 
 ## TypeScript Commands
 
@@ -74,14 +78,44 @@ nvm use 23.11
 node --version  # Should show v23.11.x
 ```
 
+## DevContainer Environment
+
+The project includes a fully configured development container with all tools and MCP servers:
+
+### Container Features
+
+- **Claude Code** with full MCP server support
+- **Basic Memory** - Markdown-based knowledge management
+- **Sequential Thinking** - Enhanced problem-solving
+- **zsh shell** with oh-my-zsh
+- **Node.js 23.11** and **Python 3.11**
+- **Git with Claude's identity**
+
+### Quick Start
+
+```bash
+# Start the container
+npm run dev:up
+
+# Enter the container
+npm run dev:shell
+
+# Stop the container
+npm run dev:down
+```
+
+For VSCode users: Open project and click "Reopen in Container" when prompted.
+
 ## Development Environment Status
 
 ### ✅ Configured Tools
 
+- **DevContainer** - Complete isolated development environment
 - **Node.js** - v23.11 with nvm for version management
 - **Markdown linting** - markdownlint-cli2 with `npm run lint:md`
 - **Git hooks** - Husky pre-commit hooks for quality checks
 - **Package management** - Root package.json for dev dependencies
+- **MCP Servers** - Basic Memory and Sequential Thinking
 
 ### 🔄 Future Considerations
 
