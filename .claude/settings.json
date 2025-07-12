@@ -1,3 +1,4 @@
 {
-  "includeCoAuthoredBy": false
+  "includeCoAuthoredBy": false,
+  "enabledMcpjsonServers": ["sequential-thinking"]
 }
