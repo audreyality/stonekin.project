@@ -61,6 +61,40 @@ npm run lint:md
 git commit --no-verify -m "emergency commit"
 ```
 
+## Git Workflow
+
+### Repository Structure
+
+- **`origin`** → `audreyality/stonekin.project` (main repository)
+- **`claude`** → `claudreyality/stonekin.project` (Claude's working repository)
+
+### Development Workflow
+
+Claude follows a pull request workflow:
+
+1. **Make commits** with Claude's git identity (`claude@audreyality.com`)
+2. **Push to Claude's repository**: `git push claude main`
+3. **Create pull requests** from `claudreyality/stonekin.project` → `audreyality/stonekin.project`
+
+This provides:
+
+- Clear attribution of AI-generated work
+- Review process for all changes
+- Separation between human and AI contributions
+- Complete audit trail
+
+### Commands
+
+```bash
+# Push Claude's work to its repository
+git push claude main
+
+# Push to main repository (human use only)
+git push origin main
+```
+
+**Note**: Claude should never push directly to `origin`. All Claude contributions go through pull requests.
+
 ## Node.js Environment
 
 ### Required Version
