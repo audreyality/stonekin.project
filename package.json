@@ -1,0 +1,19 @@
+{
+  "name": "stonekin.project",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Stonekin SDK - Development tooling and workspace configuration",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint:md": "markdownlint-cli2 '**/*.md' '!**/node_modules/**' '!**/.prompts/**' '!**/.templates/**'",
+    "lint:md:fix": "markdownlint-cli2 '**/*.md' '!**/node_modules/**' '!**/.prompts/**' '!**/.templates/**' --fix",
+    "prepare": "husky"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "markdownlint-cli2": "^0.18.1"
+  }
+}
