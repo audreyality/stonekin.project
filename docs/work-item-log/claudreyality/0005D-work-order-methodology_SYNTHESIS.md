@@ -93,12 +93,14 @@ Based on evaluation criteria, Option X scores highest because...
 ## Enhanced Workflow Integration
 
 ### Phase 1: Problem Definition and Planning
+
 1. Create `_SESSION.md` with clear problem statement
 2. Assess complexity - does this need systematic evaluation?
 3. If complex: Create `_RUBRIC.md` with evaluation criteria
 4. Document initial thoughts and approach in session file
 
 ### Phase 2: Research and Analysis
+
 1. Create `_RESEARCH.md` for systematic investigation
 2. Apply problem-driven methodology:
    - Current state analysis
@@ -109,12 +111,14 @@ Based on evaluation criteria, Option X scores highest because...
 4. Document findings with self-contained context
 
 ### Phase 3: External Validation (When Needed)
+
 1. Create `_PROMPT.md` for external LLM queries
 2. Operator executes prompts
 3. Integrate results into research
 4. Validate internal findings against external sources
 
 ### Phase 4: Implementation and Reporting
+
 1. Execute based on research recommendations
 2. Document progress in `_SESSION.md`
 3. Create `_REPORT.md` with:
@@ -127,17 +131,20 @@ Based on evaluation criteria, Option X scores highest because...
 ## Additional Best Practices from External Validation
 
 ### Stakeholder Communication
+
 - For high-impact decisions: Communicate early and often
 - Document who was consulted and when
 - Capture stakeholder concerns and how addressed
 
 ### Review and Maintenance
+
 - Schedule periodic review of decisions
 - Track actual vs. expected outcomes
 - Update documentation when context changes
 - Mark deprecated decisions clearly
 
 ### Status Lifecycle
+
 Track decision status through lifecycle:
 - **Draft**: Under development
 - **Proposed**: Ready for review
@@ -147,6 +154,7 @@ Track decision status through lifecycle:
 - **Superseded**: Replaced by newer decision
 
 ### Impact-Based Scaling
+
 Adjust methodology depth based on impact:
 - **Low Impact**: Lightweight documentation, single option acceptable
 - **Medium Impact**: Multiple options, basic rubric
@@ -175,6 +183,7 @@ Based on analysis, avoid these practices:
 ## Templates for Common Scenarios
 
 ### Simple Implementation Task
+
 ```markdown
 # _SESSION.md
 ## Objective
@@ -192,6 +201,7 @@ Based on analysis, avoid these practices:
 ```
 
 ### Complex Decision Requiring Analysis
+
 ```markdown
 # _RUBRIC.md
 [Evaluation framework]

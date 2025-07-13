@@ -23,6 +23,7 @@ This rubric evaluates work order practices using present-state criteria aligned 
 ## Evaluation Criteria
 
 ### 1. Locality
+
 **Definition:** Information and decisions are co-located with relevant context
 
 **Excellent:**
@@ -47,6 +48,7 @@ This rubric evaluates work order practices using present-state criteria aligned 
 - Decisions separated from reasoning
 
 ### 2. Context Awareness
+
 **Definition:** Information is understandable without requiring external knowledge
 
 **Excellent:**
@@ -71,6 +73,7 @@ This rubric evaluates work order practices using present-state criteria aligned 
 - Insufficient background information
 
 ### 3. Present-State Clarity
+
 **Definition:** Content is comprehensible and actionable in current conditions
 
 **Excellent:**
@@ -95,6 +98,7 @@ This rubric evaluates work order practices using present-state criteria aligned 
 - Inappropriate complexity level
 
 ### 4. Completeness
+
 **Definition:** Sufficient information provided for present-state decision-making
 
 **Excellent:**
@@ -119,6 +123,7 @@ This rubric evaluates work order practices using present-state criteria aligned 
 - Insufficient evidence or reasoning
 
 ### 5. Accessibility
+
 **Definition:** Information is discoverable and navigable in current context
 
 **Excellent:**
@@ -143,6 +148,7 @@ This rubric evaluates work order practices using present-state criteria aligned 
 - Difficult to navigate
 
 ### 6. Project Values Alignment
+
 **Definition:** Practices embody established project principles
 
 **Excellent:**
@@ -169,6 +175,7 @@ This rubric evaluates work order practices using present-state criteria aligned 
 ## Application Guidelines
 
 ### Evaluation Process
+
 1. Read work order completely
 2. Apply each criterion systematically
 3. Note specific examples supporting ratings
@@ -176,12 +183,14 @@ This rubric evaluates work order practices using present-state criteria aligned 
 5. Document overall assessment
 
 ### Handling Speculative Concerns
+
 When encountering future-focused or speculative elements:
 - Note them separately as known-unknowns
 - Do not penalize in present-state evaluation
 - Consider documenting in appropriate known-unknowns location
 
 ### Constraints Recognition
+
 - File naming convention is not subject to evaluation
 - Time-based concerns should be excluded from scoring
 - Focus on current cognitive load and complexity
