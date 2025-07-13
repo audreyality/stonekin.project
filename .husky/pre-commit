@@ -1,1 +1,18 @@
+#!/bin/sh
+# Stash unstaged changes to avoid conflicts with staged file linting
+STASH_NAME="pre-commit-$(date +%s)"
+git stash push -u -m "$STASH_NAME" --keep-index
+
+# Run markdown linting on staged files
 npm run lint:md
+
+# Store the exit code to return it later
+LINT_EXIT_CODE=$?
+
+# Restore the stashed changes
+if git stash list | grep -q "$STASH_NAME"; then
+    git stash pop
+fi
+
+# Exit with the linting result
+exit $LINT_EXIT_CODE
