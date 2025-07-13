@@ -57,6 +57,79 @@ Use the `.work` directory to document analyses, findings, and decisions. This pr
 
 For detailed guidelines on each file type, see `.work/CLAUDE.md`.
 
+### Work Order Methodology
+
+The work order system follows evidence-based practices validated through both internal analysis and external research:
+
+#### Core Practices
+
+**1. Problem-First Approach**
+- Begin every work order with explicit problem definition
+- Document current situation, friction points, and success criteria
+- Conduct current-state analysis before exploring solutions
+
+**2. Structured Evaluation (Complex Decisions)**
+- Use quantitative rubrics with weighted criteria for complex decisions
+- Score options systematically (1-5 scale) with clear justifications
+- Not every work order needs a rubric - use for multi-option decisions
+
+**3. Systematic Option Comparison**
+- Generate multiple viable alternatives before deciding
+- Document pros, cons, and trade-offs for each option
+- Make recommendations based on evaluation criteria
+
+**4. Complete Decision Trail**
+- Maintain documentation from problem through outcome
+- Record context, alternatives, criteria, and rationale
+- Link decisions to implementation results
+
+**5. Proximity-Based Context Scoping**
+- Place information at appropriate levels of the knowledge hierarchy
+- Use hyperlinks appropriately, including durable archive URLs
+- Scope information as close to the problem as possible
+- Enable precise context gathering for prompt building
+
+#### Implementation Workflow
+
+**Phase 1: Initiation**
+1. Create `_SESSION.md` with problem statement
+2. Assess complexity - structured evaluation needed?
+3. If complex: Create `_RUBRIC.md` with criteria
+4. Begin documenting approach and decisions
+
+**Phase 2: Research**
+1. Create `_RESEARCH.md` for investigation
+2. Analyze current state and generate options
+3. Apply systematic comparison
+4. Document findings with full context
+
+**Phase 3: Implementation**
+1. Execute based on research recommendations
+2. Track progress in `_SESSION.md`
+3. Document decisions as they're made
+4. Capture lessons learned
+
+**Phase 4: Completion**
+1. Create `_REPORT.md` with outcomes
+2. Update `_REMEMBER.md` with persistent knowledge
+3. Ensure complete decision documentation
+4. Archive work order when appropriate
+
+#### Quality Indicators
+
+Effective work orders demonstrate:
+- Clear problem statements establishing scope
+- Systematic analysis with evidence
+- Multiple options considered
+- Complete rationale documentation
+- Actionable outcomes
+
+#### Scaling by Impact
+
+- **Low Impact**: Lightweight documentation, quick decisions
+- **Medium Impact**: Multiple options, basic evaluation
+- **High Impact**: Full methodology, external validation
+
 This ensures all work artifacts are preserved and can inform future decisions.
 
 ## Markdown Linting
