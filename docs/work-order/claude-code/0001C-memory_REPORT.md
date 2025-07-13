@@ -295,7 +295,7 @@ When Basic Memory reaches its limits, a tiered approach allows gradual complexit
 
 ### Migration Path Design
 
-```
+```text
 Basic Memory → Memory Server → Neo4j
      ↓              ↓             ↓
 [Markdown]  → [Graph Index] → [Full Graph DB]

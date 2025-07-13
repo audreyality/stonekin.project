@@ -1,0 +1,50 @@
+# Markdownlint Configuration Memory
+
+## Configuration Philosophy
+
+This configuration implements an "auto-fix + quality-critical" approach based on the analysis in `.work/_RESEARCH.md`.
+
+## Rule Selection Rationale
+
+### Auto-Fixable Rules (16 rules)
+
+These rules are included because they:
+- Can be automatically corrected with `--fix`
+- Improve consistency without manual intervention
+- Don't interrupt the writing flow
+
+### Quality-Critical Rules (3 rules)
+
+**MD002** - First heading should be a top level heading
+- Ensures document structure starts correctly
+- Important for navigation and accessibility
+
+**MD011** - Reversed link syntax
+- Catches `(text)[url]` instead of `[text](url)`
+- Common mistake that breaks links
+
+**MD040** - Fenced code blocks should have a language specified
+- Improves syntax highlighting
+- Better documentation quality
+
+### Excluded Rules
+
+We explicitly exclude all other rules by setting `"default": false` to avoid:
+- Stylistic preferences that create friction
+- Rules that conflict with natural AI-generated content
+- Pet peeves that don't impact document quality
+
+### Special Configuration
+
+**no-inline-html** - Allows `<span>` elements
+- Needed for certain formatting requirements
+- Common in technical documentation
+
+## Workflow Integration
+
+The configuration supports the recommended workflow:
+1. Write markdown content freely
+2. Run `npm run lint:md:fix` to auto-fix formatting
+3. Only manual fixes needed are for the 3 quality rules
+
+This approach was chosen after finding that strict linting rules were causing significant friction in AI-assisted development workflows.

@@ -1,6 +1,10 @@
 # Coding Rules - Consolidated
 
 > [!IMPORTANT]
+> This document is the authoritative guide for ALL work within the `/code` directory.
+> Universal patterns (memory files, work directory) from root CLAUDE.md also apply here.
+
+> [!IMPORTANT]
 > These rules were distilled from ADRs by Claude Sonnet 4. In an event
 > of a conflict between this file and an ADR, the ADR governs.
 

@@ -7,7 +7,7 @@
     "setup": "npm install",
     "init:dev": "./scripts/init-dev.sh",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint:md": "markdownlint-cli2 '**/*.md' '!**/node_modules/**' '!**/.prompts/**' '!**/.templates/**'",
+    "lint:md": "markdownlint-cli2 '**/*.md' '!**/node_modules/**' '!**/.prompts/**' '!**/.templates/**' --fix && markdownlint-cli2 '**/*.md' '!**/node_modules/**' '!**/.prompts/**' '!**/.templates/**'",
     "lint:md:fix": "markdownlint-cli2 '**/*.md' '!**/node_modules/**' '!**/.prompts/**' '!**/.templates/**' --fix",
     "prepare": "husky",
     "dev:up": "docker-compose -f .devcontainer/docker-compose.yml up -d",

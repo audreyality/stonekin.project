@@ -1,5 +1,24 @@
 {
-    "line-length": false,
+    "default": false,
+    "MD002": true,
+    "MD009": true,
+    "MD010": true,
+    "MD011": true,
+    "MD012": true,
+    "MD014": true,
+    "MD018": true,
+    "MD019": true,
+    "MD020": true,
+    "MD021": true,
+    "MD022": true,
+    "MD023": true,
+    "MD027": true,
+    "MD030": true,
+    "MD037": true,
+    "MD038": true,
+    "MD039": true,
+    "MD040": true,
+    "MD047": true,
     "no-inline-html": {
         "allowed_elements": [
             "span"

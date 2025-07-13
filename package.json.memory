@@ -1,0 +1,19 @@
+# Package.json Script Decisions
+
+## Markdown Linting Workflow
+
+### Decision: Auto-fix before linting
+The `npm run lint:md` command runs auto-fix first, then checks for remaining issues.
+
+**Rationale:**
+- Most markdown issues are auto-fixable formatting problems
+- Running auto-fix first eliminates noise and shows only meaningful issues
+- Streamlines the development workflow by handling routine formatting automatically
+- Maintains consistency with the project's emphasis on automation over manual intervention
+
+**Implementation:**
+```bash
+"lint:md": "markdownlint-cli2 '**/*.md' '!**/node_modules/**' '!**/.prompts/**' '!**/.templates/**' --fix && markdownlint-cli2 '**/*.md' '!**/node_modules/**' '!**/.prompts/**' '!**/.templates/**'"
+```
+
+This ensures developers see only the issues that require manual attention, consistent with the project's auto-fix + quality-critical approach to markdown linting.
