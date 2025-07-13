@@ -279,12 +279,12 @@ These patterns warrant external research to validate against established practic
 - Decision architecture patterns
 
 <!-- Reference Links -->
-[0001a-rubric]: ./0001A-memory_RUBRIC.md
-[0001b-research]: ./0001B-memory_RESEARCH.md
-[0001c-report]: ./0001C-memory_REPORT.md
-[0002a-research]: ./0002A-docker_RESEARCH.md
-[0002b-report]: ./0002B-docker_REPORT.md
-[0003a-research]: ./0003A-markdownlint_RESEARCH.md
-[0003b-report]: ./0003B-markdownlint_REPORT.md
-[0004a-research]: ./0004A-documentation-patterns_RESEARCH.md
-[0004b-report]: ./0004B-documentation-patterns_REPORT.md
+[0001a-rubric]: ../0001-memory/A-RUBRIC.md
+[0001b-research]: ../0001-memory/B-RESEARCH.md
+[0001c-report]: ../0001-memory/C-REPORT.md
+[0002a-research]: ../0002-docker/A-RESEARCH.md
+[0002b-report]: ../0002-docker/B-REPORT.md
+[0003a-research]: ../0003-markdownlint/A-RESEARCH.md
+[0003b-report]: ../0003-markdownlint/B-REPORT.md
+[0004a-research]: ../0004-documentation-patterns/A-RESEARCH.md
+[0004b-report]: ../0004-documentation-patterns/B-REPORT.md

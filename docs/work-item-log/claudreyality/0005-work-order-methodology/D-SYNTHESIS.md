@@ -232,7 +232,7 @@ This methodology synthesizes proven practices from both internal experience and 
 The methodology scales from simple tasks to complex decisions while maintaining consistency and quality throughout the work order lifecycle.
 
 <!-- Reference Links -->
-[0001a-rubric]: ./0001A-memory_RUBRIC.md
-[0001b-research]: ./0001B-memory_RESEARCH.md
-[0003a-research]: ./0003A-markdownlint_RESEARCH.md
-[0004a-research]: ./0004A-documentation-patterns_RESEARCH.md
+[0001a-rubric]: ../0001-memory/A-RUBRIC.md
+[0001b-research]: ../0001-memory/B-RESEARCH.md
+[0003a-research]: ../0003-markdownlint/A-RESEARCH.md
+[0004a-research]: ../0004-documentation-patterns/A-RESEARCH.md

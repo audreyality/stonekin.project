@@ -201,11 +201,11 @@ The work order methodology is now formally documented, validated, and integrated
 ## Appendix: File Inventory
 
 **Created Files**:
-- [`0005A-work-order-methodology_RUBRIC.md`][work-rubric] - Evaluation framework
-- [`0005B-work-order-methodology_RESEARCH.md`][work-research] - Work order analysis  
-- [`0005C-work-order-methodology_PRAXIS.md`][work-praxis] - External validation
-- [`0005D-work-order-methodology_SYNTHESIS.md`][work-synthesis] - Practice synthesis
-- [`0005E-work-order-methodology_REPORT.md`][work-report] - This report
+- [`0005-work-order-methodology/A-RUBRIC.md`][work-rubric] - Evaluation framework
+- [`0005-work-order-methodology/B-RESEARCH.md`][work-research] - Work order analysis  
+- [`0005-work-order-methodology/C-PRAXIS-external-validation.md`][work-praxis] - External validation
+- [`0005-work-order-methodology/D-SYNTHESIS.md`][work-synthesis] - Practice synthesis
+- [`0005-work-order-methodology/E-REPORT.md`][work-report] - This report
 - [`docs/known-unknowns/work-order-methodology.md`][known-unknowns] - Speculative concerns
 
 **Updated Files**:
@@ -214,17 +214,17 @@ The work order methodology is now formally documented, validated, and integrated
 - `.work/CLAUDE.md` - Documented .markdownlint.json requirement
 
 **Archived Files**:
-- [`0004A-documentation-patterns_RESEARCH.md`][0004a-research]
-- [`0004B-documentation-patterns_REPORT.md`][0004b-report]
+- [`0004-documentation-patterns/A-RESEARCH.md`][0004a-research]
+- [`0004-documentation-patterns/B-REPORT.md`][0004b-report]
 (Previously moved to `docs/work-item-log/claudreyality/`)
 
 <!-- Reference Links -->
-[claude-methodology]: ../../../CLAUDE.md#work-order-methodology
-[work-rubric]: ./0005A-work-order-methodology_RUBRIC.md
-[work-research]: ./0005B-work-order-methodology_RESEARCH.md
-[work-praxis]: ./0005C-work-order-methodology_PRAXIS.md
-[work-synthesis]: ./0005D-work-order-methodology_SYNTHESIS.md
-[work-report]: ./0005E-work-order-methodology_REPORT.md
-[known-unknowns]: ../../known-unknowns/work-order-methodology.md
-[0004a-research]: ./0004A-documentation-patterns_RESEARCH.md
-[0004b-report]: ./0004B-documentation-patterns_REPORT.md
+[claude-methodology]: ../../../../CLAUDE.md#work-order-methodology
+[work-rubric]: ./A-RUBRIC.md
+[work-research]: ./B-RESEARCH.md
+[work-praxis]: ./C-PRAXIS-external-validation.md
+[work-synthesis]: ./D-SYNTHESIS.md
+[work-report]: ./E-REPORT.md
+[known-unknowns]: ../../../known-unknowns/work-order-methodology.md
+[0004a-research]: ../0004-documentation-patterns/A-RESEARCH.md
+[0004b-report]: ../0004-documentation-patterns/B-REPORT.md
