@@ -8,6 +8,60 @@
 
 - **Docker Desktop** - Required for the development container
 - **VSCode** (recommended) - For the best development experience
+- **Symlink Support** (Windows users) - Ensure symlinks are enabled for git clone
+
+#### Windows Symlink Setup
+
+> **⚠️ Windows Users**: This repository contains symlinks that are required for proper operation. Ensure symlinks are enabled before cloning:
+
+```bash
+# Enable developer mode in Windows Settings, OR
+# Run git with symlink support:
+git clone -c core.symlinks=true <repository-url>
+
+# Verify symlinks work:
+git config core.symlinks true
+```
+
+Without symlink support, the development environment may not function correctly.
+
+### Environment Variables
+
+**Required for Multi-User Development:**
+
+```bash
+# Set your user identifier for container isolation
+export CLAUDE_USER=your-identifier
+
+# Add to your shell profile for persistence
+echo 'export CLAUDE_USER=your-identifier' >> ~/.bashrc
+```
+
+**Note:** This variable enables multiple developers to use separate container environments without conflicts.
+
+### Multi-User Container Usage
+
+The project supports multiple development identities through parameterized containers:
+
+```bash
+# Initialize new user environment
+CLAUDE_USER=your-name CLAUDE_EMAIL=your@email.com ./scripts/init-dev.sh
+
+# Start container for specific user
+CLAUDE_USER=your-name npm run dev:up
+
+# Enter the container
+CLAUDE_USER=your-name npm run dev:shell
+
+# Stop the container
+CLAUDE_USER=your-name npm run dev:down
+```
+
+Each user gets:
+- Isolated container: `{username}-stonekin-dev`
+- User-specific credentials from `.claude/{username}/`
+- Isolated memory at `/memory/{username}/`
+- Fixed container user: `claudreyality`
 
 ### Initial Setup
 

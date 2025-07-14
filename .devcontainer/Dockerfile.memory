@@ -1,0 +1,68 @@
+# Dockerfile Configuration Decisions
+
+## Shell Environment Choice
+
+**Decision:** zsh with oh-my-zsh as the default shell
+
+**Rationale:**
+- Superior interactive experience compared to bash
+- Rich plugin ecosystem for development productivity
+- Better autocompletion and command history
+- User familiarity - many developers already use zsh
+- Enhanced Git integration through oh-my-zsh plugins
+
+**Implementation:** Set in Dockerfile with oh-my-zsh installation
+
+## Package Management Strategy
+
+### Python: UV Package Manager
+
+**Decision:** Use UV instead of pip for Python package management
+
+**Rationale:**
+- Modern, fast, and reliable Python package manager
+- Better dependency resolution than pip
+- Supports tool installation (`uv tool install basic-memory`)
+- Consistent with current Python ecosystem trends
+- Faster installation and better caching
+
+### Node.js: npm with nvm
+
+**Decision:** Use nvm for Node.js version management with npm for packages
+
+**Rationale:**
+- Project requires specific Node.js version (23.11)
+- nvm provides clean version switching and management
+- npm is the standard package manager for Node.js projects
+- Integrates well with existing package.json workflows
+- Supports global tool installation for MCP servers
+
+**Implementation:**
+```bash
+nvm install 23.11
+npm install @modelcontextprotocol/server-sequential-thinking
+```
+
+## Container User Strategy
+
+**Decision:** Fixed container user `claudreyality` regardless of host user
+
+**Rationale:**
+- Prevents UID conflicts between different host users
+- Simplifies credential mounting (all mount to same container location)
+- Ensures consistent permissions for SSH keys and git configs
+- Supports multi-user development with isolated containers
+- Works with both bind mounts and credential security requirements
+
+## Base Image Choice
+
+**Decision:** Ubuntu 22.04 LTS base image
+
+**Rationale:**
+- Long-term support for stability
+- Wide package availability
+- Good Docker ecosystem support
+- Familiar environment for most developers
+- Reliable foundation for development tools
+
+This configuration balances developer experience, security requirements, and multi-user isolation needs in the DevContainer environment.

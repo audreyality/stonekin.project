@@ -24,21 +24,21 @@ ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US:en
 ENV LC_ALL=en_US.UTF-8
 
-# Create claude user with sudo privileges
-RUN useradd -m -s /bin/zsh claude && \
-    echo "claude ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/claude && \
-    chmod 0440 /etc/sudoers.d/claude
+# Create claudreyality user with sudo privileges
+RUN useradd -m -s /bin/zsh claudreyality && \
+    echo "claudreyality ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/claudreyality && \
+    chmod 0440 /etc/sudoers.d/claudreyality
 
-# Switch to claude user
-USER claude
-WORKDIR /home/claude
+# Switch to claudreyality user
+USER claudreyality
+WORKDIR /home/claudreyality
 
 # Install oh-my-zsh for better shell experience
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended && \
     echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
 
 # Install nvm and Node.js 23.11
-ENV NVM_DIR="/home/claude/.nvm"
+ENV NVM_DIR="/home/claudreyality/.nvm"
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash && \
     . "$NVM_DIR/nvm.sh" && \
     nvm install 23.11 && \
@@ -58,8 +58,8 @@ RUN apt-get update && apt-get install -y \
     python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
-# Switch back to claude user
-USER claude
+# Switch back to claudreyality user
+USER claudreyality
 
 # Install UV for Python package management
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -72,24 +72,24 @@ RUN echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
 # RUN . "$NVM_DIR/nvm.sh" && npm install -g claude-code
 
 # Install Python packages with UV
-RUN /home/claude/.local/bin/uv tool install basic-memory
+RUN /home/claudreyality/.local/bin/uv tool install basic-memory
 
 # Install Node packages for MCP servers
 WORKDIR /workspace
 USER root
-RUN . "/home/claude/.nvm/nvm.sh" && \
+RUN . "/home/claudreyality/.nvm/nvm.sh" && \
     npm init -y && \
     npm install --save-dev @modelcontextprotocol/server-sequential-thinking
 
-# Set up workspace permissions
-RUN mkdir -p /workspace/memory && \
-    chown -R claude:claude /workspace
+# Set up workspace permissions and memory mount point
+RUN mkdir -p /workspace/memory /memory && \
+    chown -R claudreyality:claudreyality /workspace /memory
 
 # Copy MCP configuration
-COPY --chown=claude:claude .mcp.json /workspace/.mcp.json
+COPY --chown=claudreyality:claudreyality .mcp.json /workspace/.mcp.json
 
-# Switch to claude user for runtime
-USER claude
+# Switch to claudreyality user for runtime
+USER claudreyality
 WORKDIR /workspace
 
 # Set zsh as default shell

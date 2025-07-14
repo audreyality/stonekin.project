@@ -1,39 +1,31 @@
 services:
-  devcontainer:
+  claude-stonekin:
+    container_name: ${CLAUDE_USER}-stonekin-dev
+    hostname: ${CLAUDE_USER}-stonekin-dev
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: stonekin-dev
-    hostname: stonekin-dev
-    
-    # Volumes for development
     volumes:
-      # Project workspace
+      # Standard workspace mount (project files)
       - ..:/workspace:cached
       
-      # Memory storage at root level (not under /code)
-      - stonekin-memory:/workspace/memory
+      # User-specific home mounts into container user's home
+      - ../.claude/${CLAUDE_USER}/.gitconfig:/home/claudreyality/.gitconfig:ro
+      - ../.claude/${CLAUDE_USER}/.ssh:/home/claudreyality/.ssh:ro
+      - ../.claude/${CLAUDE_USER}/.history:/home/claudreyality/.history
       
-      # Git credentials for Claude (from repository)
-      - ../.gitconfig-claude:/home/claude/.gitconfig:ro
-      - ../.ssh-claude:/home/claude/.ssh:ro
-      
-      # Preserve shell history
-      - stonekin-history:/home/claude/.history
-      
-      # Docker socket for potential future needs
-      # - /var/run/docker.sock:/var/run/docker.sock
-    
-    # Environment variables
+      # Agent memory (separate from workspace and home)
+      - ../memory:/memory:cached
     environment:
+      # C-SYNTHESIS: Add required variable validation
+      - CLAUDE_USER=${CLAUDE_USER:?CLAUDE_USER environment variable is required. Set it to your preferred user identifier.}
+      - MEMORY_FILE_PATH=/memory/${CLAUDE_USER}
       - TERM=xterm-256color
       - SHELL=/bin/zsh
-      - MEMORY_FILE_PATH=/workspace/memory
     
     # Keep container running
     command: sleep infinity
     
-    # Network for future services
     networks:
       - stonekin-network
     
@@ -47,14 +39,8 @@ services:
           cpus: '2'
           memory: 4G
 
-# Named volumes for persistence
-volumes:
-  stonekin-memory:
-    driver: local
-  stonekin-history:
-    driver: local
+# Note: Named volumes are created automatically by Docker when referenced
 
-# Network for future service communication
 networks:
   stonekin-network:
     driver: bridge

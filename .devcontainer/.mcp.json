@@ -7,10 +7,10 @@
       ]
     },
     "basic-memory": {
-      "command": "/home/claude/.local/bin/basic-memory",
+      "command": "/home/claudreyality/.local/bin/basic-memory",
       "args": [
         "--storage",
-        "/workspace/memory"
+        "/memory/${CLAUDE_USER}"
       ]
     }
   }

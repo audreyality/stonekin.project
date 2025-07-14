@@ -1,0 +1,6 @@
+# Memory system files - prevent accidental commits
+*/
+!.gitkeep
+!*/.gitkeep
+!.markdownlint.json
+!CLAUDE.md

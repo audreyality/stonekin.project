@@ -1,0 +1,4 @@
+# Protect all user credential directories
+*/
+!.gitignore
+!_DOMAIN.md

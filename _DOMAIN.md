@@ -64,22 +64,16 @@ Subdirectories
 
 ### Development Tools
 
-- **`package.json`** - Node.js project configuration and scripts
-  - [npm documentation](https://docs.npmjs.com/cli/v10/configuring-npm/package-json)
-  - Scripts for development workflow (`dev:*`, `lint:*`)
-  - Project dependencies and dev dependencies
+- **`package.json`** - Node.js project configuration and scripts (see `package.json.memory` for detailed rationale)
 
 - **`.devcontainer/`** - Development container configuration
   - [Dev Container specification](https://containers.dev/)
-  - Provides consistent development environment
-  - Includes all necessary tools and MCP servers
+  - Provides consistent multi-user development environment
+  - For credential management architecture, see [.claude/_DOMAIN.md](.claude/_DOMAIN.md)
 
 ### Code Quality
 
-- **`.markdownlint.json`** - Markdown linting configuration
-  - [markdownlint documentation](https://github.com/DavidAnson/markdownlint)
-  - Auto-fixable formatting rules
-  - Quality-critical rules (MD002, MD011, MD040)
+- **`.markdownlint.json`** - Markdown linting configuration (see `.markdownlint.json.memory` for detailed rationale)
 
 - **`.markdownlintignore`** - Markdown linting exclusions
   - Pattern-based file exclusions
@@ -92,16 +86,9 @@ Subdirectories
   - Standard Node.js patterns
   - Project-specific exclusions
 
-- **`.gitconfig-claude`** - Claude's git identity
-  - Separate identity for AI contributions
-  - Enables clear attribution in commits
-
 ### AI Enhancement
 
-- **`.mcp.json`** - Model Context Protocol server configuration
-  - [MCP documentation](https://modelcontextprotocol.io/)
-  - Basic Memory for knowledge management
-  - Sequential Thinking for complex problem-solving
+- **`.mcp.json`** - Model Context Protocol server configuration (see `.mcp.json.memory` for detailed rationale)
 
 ## Workflow Integration
 

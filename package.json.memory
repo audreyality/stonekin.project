@@ -1,8 +1,22 @@
-# Package.json Script Decisions
+# Package.json Configuration Decisions
 
-## Markdown Linting Workflow
+## Project Configuration
 
-### Decision: Auto-fix before linting
+**Package Type:** Standard Node.js project with development tooling
+- [npm documentation](https://docs.npmjs.com/cli/v10/configuring-npm/package-json)
+- Project dependencies and dev dependencies
+- Development workflow scripts (`dev:*`, `lint:*`)
+
+## Script Architecture
+
+### Development Container Scripts (`dev:*`)
+- `dev:up`, `dev:shell`, `dev:down` for container lifecycle management
+- User parameterization through `CLAUDE_USER` environment variable
+- Docker Compose integration for consistent development environment
+
+### Markdown Linting Workflow (`lint:*`)
+
+**Decision: Auto-fix before linting**
 The `npm run lint:md` command runs auto-fix first, then checks for remaining issues.
 
 **Rationale:**
@@ -16,4 +30,14 @@ The `npm run lint:md` command runs auto-fix first, then checks for remaining iss
 "lint:md": "markdownlint-cli2 '**/*.md' '!**/node_modules/**' '!**/.prompts/**' '!**/.templates/**' --fix && markdownlint-cli2 '**/*.md' '!**/node_modules/**' '!**/.prompts/**' '!**/.templates/**'"
 ```
 
-This ensures developers see only the issues that require manual attention, consistent with the project's auto-fix + quality-critical approach to markdown linting.
+### Doctor Script Integration
+- Environment validation through `scripts/doctor.sh`
+- Progressive validation system for development setup
+- Multi-user container validation
+
+## Development Dependencies
+
+**markdownlint-cli2:** Markdown linting with auto-fix capabilities
+**husky:** Git hooks for pre-commit quality checks
+
+This configuration ensures developers see only issues requiring manual attention, consistent with the project's auto-fix + quality-critical approach to development tooling.

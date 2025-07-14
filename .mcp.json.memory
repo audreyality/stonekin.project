@@ -1,0 +1,67 @@
+# MCP Configuration Decisions
+
+## Model Context Protocol Server Configuration
+
+**Purpose:** Configure MCP servers that extend Claude Code capabilities within the development container
+
+**Reference:** [MCP documentation](https://modelcontextprotocol.io/)
+
+## Server Architecture
+
+### Basic Memory Server
+**Function:** Markdown-based knowledge management system
+**Implementation:** Python-based MCP server via UV tool installation
+**Storage Location:** `/memory/${CLAUDE_USER}/` for user isolation
+**Key Benefits:**
+- Persistent knowledge across container rebuilds
+- User-specific memory isolation in multi-user environments
+- Tool-managed content (not manually edited)
+
+### Sequential Thinking Server
+**Function:** Enhanced problem-solving through structured thought processes
+**Implementation:** Node.js MCP server via npm installation
+**Key Benefits:**
+- Complex problem analysis with step-by-step reasoning
+- Adaptive thinking process that can revise and branch
+- Particularly useful for implementation planning and debugging
+
+## Configuration Strategy
+
+### User Isolation
+Each user gets isolated memory through the `CLAUDE_USER` environment variable:
+- Memory paths: `/memory/${CLAUDE_USER}/`
+- Container naming: `${CLAUDE_USER}-stonekin-dev`
+- Complete separation between different developers
+
+### stdio Communication
+MCP servers communicate with Claude Code through standard input/output:
+- Requires all servers to run in the same container as Claude Code
+- Prevents multi-container architecture
+- Ensures reliable communication without network dependencies
+
+## Integration with DevContainer
+
+### Container Requirements
+- Python 3.11 + UV for Basic Memory server
+- Node.js 23.11 + npm for Sequential Thinking server
+- Fixed container user (`claudreyality`) for permission consistency
+- User-specific credential mounting from `.claude/${CLAUDE_USER}/`
+
+### Volume Management
+- Memory persistence through bind mounts to host `./memory/` directory
+- User-specific subdirectories maintain isolation
+- Survives container rebuilds and updates
+
+## Security Considerations
+
+### Memory Isolation
+- Each user's memory is completely isolated from other users
+- No cross-user access to thinking history or knowledge
+- Memory content not stored in source control
+
+### Server Communication
+- stdio communication provides secure, local-only access
+- No network exposure of MCP server functionality
+- Runs within container security boundaries
+
+This configuration enables powerful AI assistance while maintaining security and user isolation in the multi-user development environment.
