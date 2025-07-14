@@ -263,7 +263,7 @@ Create `.devcontainer/docker-compose.yml.memory`:
 - Prevents data leakage between different user environments
 - Enables secure multi-user development on shared systems
 - Isolates memory storage per user identifier
-```
+```text
 
 ## Implementation Priority
 

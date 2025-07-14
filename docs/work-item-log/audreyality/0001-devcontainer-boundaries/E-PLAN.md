@@ -942,7 +942,7 @@ Each user gets:
 - User-specific credentials from `.claude/{username}/`
 - Isolated memory at `/memory/{username}/`
 - Fixed container user: `claudreyality`
-```
+```text
 
 #### 7.2 Create Documentation Validation
 
