@@ -31,6 +31,10 @@ This directory contains the Architecture Decision Records (ADRs) for the Stoneki
 
 - [ADR-0012: Module Documentation Standards](./0012-documentation.md)
 
+### Context Management & Workflow
+
+- [ADR-0015: Structure CLAUDE.md as Guided Discovery](./0015-structure-claude-md-as-guided-discovery.md)
+
 ---
 
 ## Related Resoources: Domain Model
