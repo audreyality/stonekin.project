@@ -1,5 +1,7 @@
 # ADR-0015: Structure Context as Guided Discovery
 
+← [ADR-0014: RxJS Stream Primitive](0014-rxjs-stream-primitive.md) | [Index](index.md)
+
 ## Status
 
 **Current:** Active
@@ -151,8 +153,6 @@ docs/adr/CLAUDE.md: ~30 lines (ADR indexing and search workflow)
 
 - **Builds on:** [ADR-0000: Architecture Decision Records](0000-architecture-decision-records.md) (documentation patterns)
 - **See also:** [ADR-0008: Domain-Driven Design](0008-domain-driven-design.md) (context boundaries)
-
-← [ADR-0014: RxJS Stream Primitive](0014-rxjs-stream-primitive.md) 
 
 ---
 
