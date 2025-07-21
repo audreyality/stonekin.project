@@ -150,10 +150,9 @@ docs/adr/CLAUDE.md: ~30 lines (ADR indexing and search workflow)
 ## Related ADRs
 
 - **Builds on:** [ADR-0000: Architecture Decision Records](0000-architecture-decision-records.md) (documentation patterns)
-- **Supports:** All existing ADRs (by making them discoverable through guided workflows)
 - **See also:** [ADR-0008: Domain-Driven Design](0008-domain-driven-design.md) (context boundaries)
 
-← [ADR-0014: RxJS Stream Primitive](0014-rxjs-stream-primitive.md) | [Next ADR](0016-filename.md) →
+← [ADR-0014: RxJS Stream Primitive](0014-rxjs-stream-primitive.md) 
 
 ---
 
