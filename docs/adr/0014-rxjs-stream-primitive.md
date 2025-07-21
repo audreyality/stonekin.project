@@ -1,6 +1,6 @@
 # ADR-0014: Adopt RxJS as Stream Primitive
 
-← [ADR-0013: Standard Files](0013-standard-files.md) | [Index](index.md) | Next → (End of sequence)
+← [ADR-0013: Standard Files](0013-standard-files.md) | [Index](index.md) | [ADR-0015: Agent Guided Discovery](0015-agent-guided-discovery.md) →
 
 ## Status
 
